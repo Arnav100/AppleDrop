@@ -1,4 +1,4 @@
-
+import java.awt.Color;
 /**
  * Write a description of class Apple here.
  *
@@ -7,20 +7,48 @@
  */
 public class Apple
 {
-   private final double SCREEN_PORPORTION = 32;
-   private double radius;
-   private double x, y;
+   private final int SCREEN_PORPORTION = 32;
+   private int radius;
+   private int x, y;
+   private int moveSpeed;
+   private Color color; 
    
-    
    public Apple(int screenWidth, int screenHeight, int clickX)
+   {
+       this(screenWidth, screenHeight, clickX, 5);
+       color = Colour.RED;
+   }
+   
+   public Apple(int screenWidth, int screenHeight, int clickX, int moveSpeed)
    {
        this.x = clickX;
        this.y = 0;
-       radius = screenWidth/ SCREEN_PORPORTION;
-   }
-   
+       this.radius = screenWidth/SCREEN_PORPORTION;
+       this.moveSpeed = moveSpeed;
+       color = Colour.GREEN;
+    }
    public void move()
    {
+       y += moveSpeed;
    }
    
+   public int getX()
+   {
+       return x;
+   }
+   
+   public int getY()
+   {
+       return y;
+    }
+
+   public int getSize()
+   {
+       return radius*2;
+   }
+   
+   public Color getColor()
+   {
+       return color;
+   }
 }
