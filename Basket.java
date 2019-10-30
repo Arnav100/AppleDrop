@@ -11,9 +11,11 @@ public class Basket
     private int x;
 
     /**
-     * Constructor for objects of class Basket
+     * Creates a trapezoidal Basket with fixed dimensions, provided horizontal position,
+     * and 
+     * top-left point, and fixed y positions
      */
-    public Basket()
+    public Basket( int x )
     {
         // initialise instance variables
         x = 0;

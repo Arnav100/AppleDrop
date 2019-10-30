@@ -9,9 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 /**
  * Write a description of class AppleDrop here.
  *
@@ -24,13 +27,19 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     getWidth();
     private static final int MAX_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().
     getHeight();
+    private static final Rectangle SCREEN_DIMENSIONS = new Rectangle( 0, 0, MAX_WIDTH,
+    MAX_HEIGHT );
     
     private int panelWidth;
     private int panelHeight;
     
     private int time; 
     
+    private ArrayList apples;
+    private Basket[] baskets;
+    
     private boolean first;
+    
     public AppleDrop()
     {
     }
@@ -71,6 +80,22 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     public void mouseClicked(MouseEvent me)
     {
+    }
+    
+    public void paintComponent()
+    {
+        if( first )
+            initialize();
+        apples = new ArrayList< Apple >();
+    }
+    private void initialize()
+    {
+        panelWidth = this.getWidth();
+        panelHeight = this.getHeight();
+        
+        apples = new ArrayList< Apple >();
+        baskets = new Basket[]{ new Basket( panelWidth / 4 ),
+            new Basket( 3 * panelWidth / 4 ) };
     }
     
     /*Player1 = mouse 

@@ -7,5 +7,20 @@
  */
 public class Apple
 {
+   private final double SCREEN_PORPORTION = 32;
+   private double radius;
+   private double x, y;
+   
+    
+   public Apple(int screenWidth, int screenHeight, int clickX)
+   {
+       this.x = clickX;
+       this.y = 0;
+       radius = screenWidth/ SCREEN_PORPORTION;
+   }
+   
+   public void move()
+   {
+   }
    
 }
