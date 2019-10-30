@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Apple
+comment0.text=\n\ Write\ a\ description\ of\ class\ Apple\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=screenWidth\ screenHeight\ clickX
+comment1.target=Apple(int,\ int,\ int)
+comment2.params=
+comment2.target=void\ move()
+numComments=3
