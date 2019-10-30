@@ -20,8 +20,20 @@ import javax.swing.Timer;
  */
 public class AppleDrop extends JPanel implements ActionListener, KeyListener, MouseListener
 {
+    private static final int MAX_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().
+    getWidth();
+    private static final int MAX_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().
+    getHeight();
     
+    private int panelWidth;
+    private int panelHeight;
     
+    private int time; 
+    
+    private boolean first;
+    public AppleDrop()
+    {
+    }
     
     public void actionPerformed(ActionEvent ae)
     {
@@ -56,6 +68,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     public void mousePressed(MouseEvent me)
     {
     }
+    
     public void mouseClicked(MouseEvent me)
     {
     }
