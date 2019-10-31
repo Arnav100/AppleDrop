@@ -38,6 +38,8 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     private int time; 
     
+    private long pressedTime;
+    
     private ArrayList< Apple > apples;
     private Basket[] baskets;
     
@@ -81,15 +83,26 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     public void mouseReleased(MouseEvent me)
     {
+        if(System.currentTimeMillis() - pressedTime < 500)
+        {
+            apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
+            return;
+        }
+        long totalTimePressed = System.currentTimeMillis() - pressedTime;
+        if(totalTimePressed > 5000)
+            totalTimePressed = 5000;
+        double speed = (totalTimePressed/(double)5000)*25;
+        apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX(), (int)speed ) );
     }
     
     public void mousePressed(MouseEvent me)
     {
+        pressedTime = System.currentTimeMillis();
     }
     
     public void mouseClicked(MouseEvent me)
     {
-        apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
+        
     }
     
     int size;
@@ -118,8 +131,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
         
-        baskets = new Basket[]{ new Basket( panelWidth / QUARTER ),
-            new Basket( THREE * panelWidth / QUARTER ) };
+        
             
         first = false;
     }
