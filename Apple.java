@@ -7,7 +7,7 @@ import java.awt.Color;
  */
 public class Apple
 {
-   private final int SCREEN_PORPORTION = 32;
+   private final int SCREEN_PORPORTION = 70;
    private int radius;
    private int x, y;
    private int moveSpeed;
@@ -18,7 +18,6 @@ public class Apple
        this(screenWidth, screenHeight, clickX, 5);
        color = Colour.RED;
    }
-   
    public Apple(int screenWidth, int screenHeight, int clickX, int moveSpeed)
    {
        this.x = clickX;
