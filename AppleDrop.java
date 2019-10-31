@@ -30,22 +30,31 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     private static final Rectangle SCREEN_DIMENSIONS = new Rectangle( 0, 0, MAX_WIDTH,
     MAX_HEIGHT );
     
+    private static final int QUARTER = 4;
+    private static final int THREE = 3;
+    
     private int panelWidth;
     private int panelHeight;
     
     private int time; 
     
-    private ArrayList apples;
+    private ArrayList< Apple > apples;
     private Basket[] baskets;
     
     private boolean first;
     
     public AppleDrop()
     {
+        apples = new ArrayList< Apple >();
+        
+        first = true;
     }
     
     public void actionPerformed(ActionEvent ae)
     {
+        for( Apple apple : apples )
+             apple.move();
+        repaint();
     }
     
     public void keyReleased( KeyEvent ke)
@@ -80,22 +89,56 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     public void mouseClicked(MouseEvent me)
     {
+        apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
     }
     
-    public void paintComponent()
+    int size;
+    public void paintComponent( Graphics g )
     {
         if( first )
             initialize();
-        apples = new ArrayList< Apple >();
+        background( g );
+        for( Apple apple : apples )
+        {
+            g.setColor( apple.getColor() );
+            size = apple.getSize();
+            g.fillOval( apple.getX(), apple.getY(), size, size );
+        }
+    }
+    private void background( Graphics g )
+    {
+        super.paintComponent( g );
     }
     private void initialize()
     {
         panelWidth = this.getWidth();
         panelHeight = this.getHeight();
         
-        apples = new ArrayList< Apple >();
-        baskets = new Basket[]{ new Basket( panelWidth / 4 ),
-            new Basket( 3 * panelWidth / 4 ) };
+        time = 0;
+        Timer clock = new Timer( 20 /*what should this be*/, this ); 
+        clock.start();
+        
+        baskets = new Basket[]{ new Basket( panelWidth / QUARTER ),
+            new Basket( THREE * panelWidth / QUARTER ) };
+            
+        first = false;
+    }
+    
+    public static void main( String[] args )
+    {
+        JFrame frame = new JFrame( "Apple Drop" );
+        frame.setBounds( SCREEN_DIMENSIONS );
+        
+        AppleDrop ad = new AppleDrop();
+        frame.addKeyListener( ad );
+        frame.addMouseListener( ad );
+        frame.add( ad );
+        
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frame.setResizable( false );
+        frame.setAlwaysOnTop( true );
+        
+        frame.setVisible( true );
     }
     
     /*Player1 = mouse 
