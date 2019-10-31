@@ -1,4 +1,4 @@
-
+import java.awt.Color;
 /**
  * Write a description of class Basket here.
  *
@@ -7,27 +7,54 @@
  */
 public class Basket
 {
-    // instance variables - replace the example below with your own
     private int x;
-
-    /**
-     * Constructor for objects of class Basket
-     */
-    public Basket()
+    private int bigWidth, smallWidth;
+    private int basketHeight, screenHeight;
+    private int moveSpeed;
+    private Color color;
+    private final int SCREEN_PORPORTION_FOR_BIG_WIDTH= 20, SCREEN_PORPORTION_FOR_SMALL_WIDTH = 25;
+    private final int SCREEN_PORPORTION_FOR_HEIGHT = 20;
+    public Basket(int screenWidth, int screenHeight, int initialX)
     {
-        // initialise instance variables
-        x = 0;
+        this.bigWidth = screenWidth/SCREEN_PORPORTION_FOR_BIG_WIDTH;
+        this.smallWidth = screenWidth/SCREEN_PORPORTION_FOR_SMALL_WIDTH;
+        this.screenHeight = screenHeight;
+        this.basketHeight = screenHeight/SCREEN_PORPORTION_FOR_HEIGHT;
+        this.x = initialX;
+        this.moveSpeed = 5;
+        this.color = Colour.BROWN;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    
+    public void moveRight()
     {
-        // put your code here
-        return x + y;
+        x += moveSpeed;
     }
+    
+    public void moveLeft()
+    {
+        x -= moveSpeed;
+    }
+    
+    public int getX()
+    {
+        return x;
+    }
+    
+    public int getHeight()
+    {
+        return basketHeight;
+    }
+    
+    public int[] getXCoords()
+    {
+        int diff = (bigWidth-smallWidth)/2;
+        return new int[]{x, x + bigWidth, x + bigWidth - diff, x + diff };
+    }
+    
+    public int[] getYCoords()
+    {
+        return new int[]{screenHeight-basketHeight, screenHeight-basketHeight, screenHeight, screenHeight};
+    }
+    
+    
 }
