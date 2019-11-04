@@ -32,6 +32,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     private static final int QUARTER = 4;
     private static final int THREE = 3;
+    private static final int TRAP_POINTS = 4;
     
     private int panelWidth;
     private int panelHeight;
@@ -104,6 +105,11 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
             size = apple.getSize();
             g.fillOval( apple.getX(), apple.getY(), size, size );
         }
+        for( Basket basket : baskets )
+        {
+            g.setColor( basket.getColor() );
+            g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
+        }
     }
     private void background( Graphics g )
     {
@@ -118,8 +124,8 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
         
-        baskets = new Basket[]{ new Basket( panelWidth / QUARTER ),
-            new Basket( THREE * panelWidth / QUARTER ) };
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / QUARTER ),
+            new Basket( panelWidth, panelHeight, THREE * panelWidth / QUARTER ) };
             
         first = false;
     }

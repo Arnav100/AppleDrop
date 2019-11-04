@@ -50,6 +50,7 @@ public class Colour
             ORANGE = new Color(255, 128, 0),
             CHOCOLATE = new Color(128, 64, 0),
             BROWN = new Color(192, 96, 0),
+            CHOCOLATE_TRANSLUCENT = new Color(128, 64, 0, 124),
             LIGHT_ORANGE = new Color(255, 192, 64);
             
 }
