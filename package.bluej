@@ -1,12 +1,12 @@
 #BlueJ package file
-dependency1.from=AppleDrop
-dependency1.to=Apple
+dependency1.from=Basket
+dependency1.to=Colour
 dependency1.type=UsesDependency
 dependency2.from=AppleDrop
-dependency2.to=Basket
+dependency2.to=Apple
 dependency2.type=UsesDependency
-dependency3.from=Basket
-dependency3.to=Colour
+dependency3.from=AppleDrop
+dependency3.to=Basket
 dependency3.type=UsesDependency
 editor.fx.0.height=735
 editor.fx.0.width=813

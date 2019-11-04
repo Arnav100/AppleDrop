@@ -38,6 +38,15 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     private int panelHeight;
     
     private int time; 
+    private boolean[] keys;
+    private static final int NUM_KEYS = 4;
+    private static final int RIGHT = 0;
+    private static final int LEFT = 1;
+    private static final int SPACE = 2;
+    private static final int ESCAPE = 3;
+    
+    private long pressedTime;
+    private long lastPressedTime;
     
     private ArrayList< Apple > apples;
     private Basket[] baskets;
@@ -58,18 +67,43 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         repaint();
     }
     
-    public void keyReleased( KeyEvent ke)
-    {
-
-    }
-    
     public void keyPressed( KeyEvent ke)
     {
- 
+        if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
+            keys[ RIGHT ] = true;
+        if( ke.getKeyCode() == KeyEvent.VK_LEFT )
+            keys[ LEFT ] = true;
+        if( ke.getKeyCode() == KeyEvent.VK_SPACE )
+            keys[ SPACE ] = true;
+        update();
+    }
+    
+    public void keyReleased( KeyEvent ke)
+    {
+        if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
+            keys[ RIGHT ] = false;
+        if( ke.getKeyCode() == KeyEvent.VK_LEFT )
+            keys[ LEFT ] = false;
+        if( ke.getKeyCode() == KeyEvent.VK_SPACE )
+            keys[ SPACE ] = false;
     }
     
     public void keyTyped( KeyEvent ke)
     {
+    }
+    
+    private void update()
+    {
+        if( keys[ RIGHT ] )
+            for( Basket basket : baskets )
+                basket.moveRight();
+        if( keys[ LEFT ] )
+            for( Basket basket : baskets )
+                basket.moveLeft();
+        if( keys[ SPACE ] )
+        {
+        }
+        repaint();
     }
     
     public void mouseExited(MouseEvent me)
@@ -82,15 +116,31 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     
     public void mouseReleased(MouseEvent me)
     {
+        if( pressedTime - lastPressedTime >= 4000 )
+        {
+            lastPressedTime = pressedTime;
+            if(System.currentTimeMillis() - pressedTime < 500 )
+            {
+                apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
+                return;
+            }
+            long totalTimePressed = System.currentTimeMillis() - pressedTime;
+            if(totalTimePressed > 5000)
+                totalTimePressed = 5000;
+            double speed = (totalTimePressed/(double)5000)*25;
+            apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX(),
+            (int)speed ) );
+        }
     }
     
     public void mousePressed(MouseEvent me)
     {
+        pressedTime = System.currentTimeMillis();
     }
     
     public void mouseClicked(MouseEvent me)
     {
-        apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
+        
     }
     
     int size;
@@ -123,10 +173,10 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         time = 0;
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
-        
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / QUARTER ),
-            new Basket( panelWidth, panelHeight, THREE * panelWidth / QUARTER ) };
             
+        keys = new boolean[ NUM_KEYS ];
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 2 ) };
+        
         first = false;
     }
     
