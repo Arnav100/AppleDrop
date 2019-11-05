@@ -50,4 +50,9 @@ public class Apple
    {
        return color;
    }
+   
+   public void swat()
+   {
+       this.moveSpeed *= -1;
+   }
 }

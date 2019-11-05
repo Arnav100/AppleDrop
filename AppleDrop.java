@@ -92,6 +92,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     {
     }
     
+    int x;
     private void update()
     {
         if( keys[ RIGHT ] )
@@ -102,6 +103,13 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
                 basket.moveLeft();
         if( keys[ SPACE ] )
         {
+            for( Apple apple : apples )
+            {
+                x = apple.getX();    
+                if( apple.getY() > panelHeight - baskets[0].getHeight() - apple.getSize() 
+                    /*make so that apple has to be in x-range too*/ )
+                    apple.swat();
+                }
         }
         repaint();
     }
