@@ -3,10 +3,10 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
+
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+
 import java.awt.event.MouseEvent;
 
 import java.util.ArrayList;
@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 /**
  * Write a description of class AppleDrop here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class AppleDrop extends JPanel implements ActionListener, KeyListener, MouseListener
+public class AppleDrop extends JPanel implements ActionListener, MouseListener
 {
     private static final int MAX_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().
     getWidth();
@@ -38,12 +37,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     private int panelHeight;
     
     private int time; 
-    private boolean[] keys;
-    private static final int NUM_KEYS = 4;
-    private static final int RIGHT = 0;
-    private static final int LEFT = 1;
-    private static final int SPACE = 2;
-    private static final int ESCAPE = 3;
+
     
     private long pressedTime;
     private long lastPressedTime;
@@ -54,7 +48,7 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     private boolean startBarFill;
     
     private boolean first;
-    
+    private boolean[] keys;
     public AppleDrop()
     {
         apples = new ArrayList< Apple >();
@@ -70,43 +64,29 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         repaint();
     }
     
-    public void keyPressed( KeyEvent ke)
+    public Basket[] getBaskets()
     {
-        if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ RIGHT ] = true;
-        if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ LEFT ] = true;
-        if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ SPACE ] = true;
-        update();
+        return baskets;
     }
     
-    public void keyReleased( KeyEvent ke)
+    public void setKeys(boolean[] keys)
     {
-        if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ RIGHT ] = false;
-        if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ LEFT ] = false;
-        if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ SPACE ] = false;
+        this.keys = keys;
     }
+
     
-    public void keyTyped( KeyEvent ke)
+    public void update()
     {
-    }
-    
-    private void update()
-    {
-        if( keys[ RIGHT ] )
+        if( keys[  KeyboardListener.Keys.RIGHT.get() ] )
             for( Basket basket : baskets )
                 basket.moveRight();
-        if( keys[ LEFT ] )
+        if( keys[ KeyboardListener.Keys.LEFT.get() ] )
             for( Basket basket : baskets )
                 basket.moveLeft();
-        if( keys[ SPACE ] )
+        if( keys[  KeyboardListener.Keys.SPACE.get() ] )
         {
         }
-        repaint();
+       
     }
     
     public void mouseExited(MouseEvent me)
@@ -118,29 +98,38 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
     }
     
     private final int MAX_CLICK_TIME = 5000;
-    private final int MAX_SPEED = 25;
+   
     
     public void mouseReleased(MouseEvent me)
     {
+        System.out.println(me.getClickCount());
         if( pressedTime - lastPressedTime >= 1000 )
         { 
             
             lastPressedTime = pressedTime;
-            	
-            if(System.currentTimeMillis() - pressedTime < 500 )
+            long totalTimePressed = System.currentTimeMillis() - pressedTime;
+            if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
+            {
+                apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ,true));
+                startBarFill = false;
+                return;
+            }
+               
+            if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
             {
                 apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
                 startBarFill = false;
                 return;
             }
-            long totalTimePressed = System.currentTimeMillis() - pressedTime;
+            
             if(totalTimePressed > MAX_CLICK_TIME)
                 totalTimePressed = MAX_CLICK_TIME;
-            double speed = (totalTimePressed/(double)MAX_CLICK_TIME)*MAX_SPEED;
-            apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX(), (int)speed ) );
+                
+            double speed = (totalTimePressed/(double)MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5) ;
+            apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX(), (int)speed + 5 ) );
            
         }
-         startBarFill = false;
+        startBarFill = false;
     }
     
     
@@ -219,9 +208,8 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
             
-        keys = new boolean[ NUM_KEYS ];
         baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 2 ) };
-        
+        keys = new boolean[4];
         first = false;
     }
     
@@ -231,7 +219,8 @@ public class AppleDrop extends JPanel implements ActionListener, KeyListener, Mo
         frame.setBounds( SCREEN_DIMENSIONS );
         
         AppleDrop ad = new AppleDrop();
-        frame.addKeyListener( ad );
+        
+        frame.addKeyListener( new KeyboardListener(ad) );
         frame.addMouseListener( ad );
         frame.add( ad );
         

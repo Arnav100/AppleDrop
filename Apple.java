@@ -12,12 +12,22 @@ public class Apple
    private int x, y;
    private int moveSpeed;
    private Color color; 
+   public static final int MAX_SPEED = 25;
    
    public Apple(int screenWidth, int screenHeight, int clickX)
    {
        this(screenWidth, screenHeight, clickX, 5);
        color = Colour.RED;
    }
+   public Apple(int screenWidth, int screenHeight, int clickX, boolean isBrown)
+   {
+      this(screenWidth, screenHeight, clickX, MAX_SPEED/2);
+      if(isBrown)
+        color = Colour.BROWN;
+      else
+        color = Colour.RED;
+   }
+   
    public Apple(int screenWidth, int screenHeight, int clickX, int moveSpeed)
    {
        this.x = clickX;
