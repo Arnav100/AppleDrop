@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Basket
-comment0.text=\n\ Write\ a\ description\ of\ class\ Basket\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Basket\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=screenWidth\ screenHeight\ initialX
 comment1.target=Basket(int,\ int,\ int)
 comment2.params=
@@ -8,11 +8,13 @@ comment2.target=void\ moveRight()
 comment3.params=
 comment3.target=void\ moveLeft()
 comment4.params=
-comment4.target=int\ getX()
+comment4.target=java.awt.Color\ getColor()
 comment5.params=
-comment5.target=int\ getHeight()
+comment5.target=int\ getX()
 comment6.params=
-comment6.target=int[]\ getXCoords()
+comment6.target=int\ getHeight()
 comment7.params=
-comment7.target=int[]\ getYCoords()
-numComments=8
+comment7.target=int[]\ getXCoords()
+comment8.params=
+comment8.target=int[]\ getYCoords()
+numComments=9

@@ -12,8 +12,10 @@ public class Basket
     private int basketHeight, screenHeight;
     private int moveSpeed;
     private Color color;
-    private final int SCREEN_PORPORTION_FOR_BIG_WIDTH= 20, SCREEN_PORPORTION_FOR_SMALL_WIDTH = 25;
-    private final int SCREEN_PORPORTION_FOR_HEIGHT = 20;
+    private final int SCREEN_PORPORTION_FOR_BIG_WIDTH = 8,
+    SCREEN_PORPORTION_FOR_SMALL_WIDTH = 16;
+    private final int SCREEN_PORPORTION_FOR_HEIGHT = 16;
+    private final int SPEED = 20;
     public Basket(int screenWidth, int screenHeight, int initialX)
     {
         this.bigWidth = screenWidth/SCREEN_PORPORTION_FOR_BIG_WIDTH;
@@ -21,8 +23,8 @@ public class Basket
         this.screenHeight = screenHeight;
         this.basketHeight = screenHeight/SCREEN_PORPORTION_FOR_HEIGHT;
         this.x = initialX;
-        this.moveSpeed = 5;
-        this.color = Colour.BROWN;
+        this.moveSpeed = SPEED;
+        this.color = Colour.CHOCOLATE_TRANSLUCENT;
     }
     
     public void moveRight()
@@ -33,6 +35,11 @@ public class Basket
     public void moveLeft()
     {
         x -= moveSpeed;
+    }
+    
+    public Color getColor()
+    {
+        return color;
     }
     
     public int getX()
@@ -53,8 +60,7 @@ public class Basket
     
     public int[] getYCoords()
     {
-        return new int[]{screenHeight-basketHeight, screenHeight-basketHeight, screenHeight, screenHeight};
+        return new int[]{screenHeight-basketHeight, screenHeight-basketHeight, screenHeight,
+            screenHeight};
     }
-    
-    
 }
