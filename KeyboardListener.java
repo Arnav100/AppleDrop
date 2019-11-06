@@ -34,6 +34,7 @@ public class KeyboardListener implements KeyListener
     
     public void keyPressed( KeyEvent ke)
     {
+       
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
             keys[ Keys.RIGHT.get() ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )

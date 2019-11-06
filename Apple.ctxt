@@ -17,4 +17,6 @@ comment7.params=
 comment7.target=int\ getSize()
 comment8.params=
 comment8.target=java.awt.Color\ getColor()
-numComments=9
+comment9.params=
+comment9.target=void\ swat()
+numComments=10

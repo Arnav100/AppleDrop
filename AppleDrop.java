@@ -74,9 +74,11 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         this.keys = keys;
     }
 
-    
-    public void update()
+  
+    int x;
+    private void update()
     {
+        
         if( keys[  KeyboardListener.Keys.RIGHT.get() ] )
             for( Basket basket : baskets )
                 basket.moveRight();
@@ -85,6 +87,12 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
                 basket.moveLeft();
         if( keys[  KeyboardListener.Keys.SPACE.get() ] )
         {
+            for( Apple apple : apples )
+            {
+                for( Basket basket : baskets )
+                    if( basket.contains( apple ) )
+                        apple.swat();
+                }
         }
        
     }
@@ -158,16 +166,17 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         }
         
         drawSpeedBar(g);
-              for( Basket basket : baskets )
+        for( Basket basket : baskets )
         {
             g.setColor( basket.getColor() );
             g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
+            if(  basket.getPast() > 0 )
+                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
         }
     }
     
     private void drawSpeedBar(Graphics g)
     {
-       
         int widthPorportion = getWidth()/10;
         double widthPlacement = 7;
         double widthMultiplier = 2;
@@ -191,8 +200,11 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
             g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
                         (int)(widthPorportion * widthMultiplier * timePorportion), (int)(heightPorportion * heightMultiplier));
          }
-  
-
+    }
+    
+    private void drawTimer( Graphics g )
+    {
+        int widthProportion = getWidth() / 10;
     }
     
     private void background( Graphics g )
@@ -208,8 +220,12 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
             
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 2 ) };
         keys = new boolean[4];
+
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 4 ),
+      /*  new Basket( panelWidth, panelHeight, 3 * panelWidth / 4 )*/ };
+        
+
         first = false;
     }
     
