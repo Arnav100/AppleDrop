@@ -20,7 +20,7 @@ import javax.swing.Timer;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class AppleDrop extends JPanel implements ActionListener, MouseListener
+public class AppleDrop extends JPanel implements ActionListener
 {
     private static final int MAX_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().
     getWidth();
@@ -69,11 +69,30 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         return baskets;
     }
     
+    public ArrayList<Apple> getApples()
+    {
+        return apples;
+    }
+    
     public void setKeys(boolean[] keys)
     {
         this.keys = keys;
     }
-
+    
+    public void setPressedTime(long t)
+    {
+        pressedTime = t;
+    }
+    
+    public long getPressedTime()
+    {
+        return pressedTime;
+    }
+    
+    public void setStartBarFill(boolean s)
+    {
+        startBarFill = s;
+    }
   
     int x;
     private void update()
@@ -96,61 +115,7 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         }
        
     }
-    
-    public void mouseExited(MouseEvent me)
-    {
-    }
-    
-    public void mouseEntered(MouseEvent me)
-    {
-    }
-    
-    private final int MAX_CLICK_TIME = 5000;
-   
-    
-    public void mouseReleased(MouseEvent me)
-    {
-        System.out.println(me.getClickCount());
-        if( pressedTime - lastPressedTime >= 1000 )
-        { 
-            
-            lastPressedTime = pressedTime;
-            long totalTimePressed = System.currentTimeMillis() - pressedTime;
-            if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
-            {
-                apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ,true));
-                startBarFill = false;
-                return;
-            }
-               
-            if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
-            {
-                apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX() ) );
-                startBarFill = false;
-                return;
-            }
-            
-            if(totalTimePressed > MAX_CLICK_TIME)
-                totalTimePressed = MAX_CLICK_TIME;
-                
-            double speed = (totalTimePressed/(double)MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5) ;
-            apples.add( new Apple( this.panelWidth, this.panelHeight, me.getX(), (int)speed + 5 ) );
-           
-        }
-        startBarFill = false;
-    }
-    
-    
-    public void mousePressed(MouseEvent me)
-    {
-        pressedTime = System.currentTimeMillis();
-        startBarFill = true;
-    }
-    
-    public void mouseClicked(MouseEvent me)
-    {
-        
-    }
+ 
     
     int size;
     public void paintComponent( Graphics g )
@@ -174,7 +139,7 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
                 g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
         }
     }
-    
+    public final int MAX_CLICK_TIME = 5000;
     private void drawSpeedBar(Graphics g)
     {
         int widthPorportion = getWidth()/10;
@@ -237,7 +202,7 @@ public class AppleDrop extends JPanel implements ActionListener, MouseListener
         AppleDrop ad = new AppleDrop();
         
         frame.addKeyListener( new KeyboardListener(ad) );
-        frame.addMouseListener( ad );
+        frame.addMouseListener( new MouseClickListener(ad) );
         frame.add( ad );
         
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
