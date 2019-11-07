@@ -98,14 +98,13 @@ public class AppleDrop extends JPanel implements ActionListener
     private void update()
     {
         
-        if( keys[  KeyboardListener.Keys.RIGHT.get() ] )
+        if( keys[  KeyboardListener.RIGHT] )
             for( Basket basket : baskets )
                 basket.moveRight();
-        if( keys[ KeyboardListener.Keys.LEFT.get() ] )
+        if( keys[ KeyboardListener.LEFT ] )
             for( Basket basket : baskets )
                 basket.moveLeft();
-        if( keys[  KeyboardListener.Keys.SPACE.get() ] )
-        {
+        if( keys[  KeyboardListener.SPACE] )       {
             for( Apple apple : apples )
             {
                 for( Basket basket : baskets )

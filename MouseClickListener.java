@@ -37,23 +37,21 @@ public class MouseClickListener implements MouseListener
             if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
             {
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ,true));
-               game.setStartBarFill(false);
-                return;
             }
                
-            if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
+            else if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
             {
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ) );
-                game.setStartBarFill(false);
-                return;
             }
             
-            if(totalTimePressed > game.MAX_CLICK_TIME)
+            else
+            {
                 totalTimePressed = game.MAX_CLICK_TIME;
-                
-            double speed = (totalTimePressed/(double)game.MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5) ;
-            game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX(), (int)speed + 5 ) );
-           
+                double speed = (totalTimePressed/(double)game.MAX_CLICK_TIME)*
+                (Apple.MAX_SPEED - 5);
+                game.getApples().add( new Apple( game.getWidth(), game.getHeight(),
+                me.getX(), (int)speed + 5 ) );
+            }
         }
         game.setStartBarFill(false);
     }
