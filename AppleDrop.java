@@ -46,6 +46,7 @@ public class AppleDrop extends JPanel implements ActionListener
     private Basket[] baskets;
     
     private boolean startBarFill;
+    private boolean recoilBar;
     
     private boolean first;
     private boolean[] keys;
@@ -156,6 +157,11 @@ public class AppleDrop extends JPanel implements ActionListener
         g.setColor(Colour.BLACK);
         g.drawRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
                     (int)(widthPorportion * widthMultiplier), (int)(heightPorportion * heightMultiplier));
+        if(recoilBar)
+        {
+            g.setColor(Colour.BLUE);
+        }
+        
         if(startBarFill)
         {
             g.setColor(Colour.GREEN);
@@ -164,7 +170,7 @@ public class AppleDrop extends JPanel implements ActionListener
                 timePorportion = 1;
             g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
                         (int)(widthPorportion * widthMultiplier * timePorportion), (int)(heightPorportion * heightMultiplier));
-         }
+        }
     }
     
     private void drawTimer( Graphics g )
