@@ -32,6 +32,7 @@ public class AppleDrop extends JPanel implements ActionListener
     private static final int QUARTER = 4;
     private static final int THREE = 3;
     private static final int TRAP_POINTS = 4;
+    private static final int NUM_KEYS = 4;
     
     private int panelWidth;
     private int panelHeight;
@@ -132,8 +133,13 @@ public class AppleDrop extends JPanel implements ActionListener
         drawSpeedBar(g);
         for( Basket basket : baskets )
         {
-            g.setColor( basket.getColor() );
+            g.setColor( Colour.CHOCOLATE_TRANSLUCENT );
             g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
+            g.setColor( Colour.CHOCOLATE );
+            for( int[] line : basket.getLines() )
+            {
+                g.drawLine( line[0], line[1], line[2], line[3] );
+            }
             if(  basket.getPast() > 0 )
                 g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
         }
@@ -184,10 +190,10 @@ public class AppleDrop extends JPanel implements ActionListener
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
             
-        keys = new boolean[4];
+        keys = new boolean[ NUM_KEYS ];
 
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 4 ),
-      /*  new Basket( panelWidth, panelHeight, 3 * panelWidth / 4 )*/ };
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / QUARTER ),
+        new Basket( panelWidth, panelHeight, THREE * panelWidth / QUARTER ) };
         
 
         first = false;

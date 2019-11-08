@@ -23,13 +23,14 @@ public class KeyboardListener implements KeyListener
     
     public void keyPressed( KeyEvent ke)
     {
-       
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
             keys[ RIGHT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
             keys[ LEFT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
             keys[ SPACE ] = true;
+        if( ke.getKeyCode() == KeyEvent.VK_ESCAPE )
+            keys[ ESCAPE ] = true;
         game.setKeys(keys);
     }
 
