@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 public class MouseClickListener implements MouseListener
 {
     private AppleDrop game;
-    
+    public static final int MAX_CLICK_TIME = 5000;
     public MouseClickListener(AppleDrop a)
     {
         game = a;
@@ -25,7 +25,7 @@ public class MouseClickListener implements MouseListener
     }
     
     
-    private  long lastPressedTime;
+    private long lastPressedTime;
     
     public void mouseReleased(MouseEvent me)
     {
@@ -37,23 +37,20 @@ public class MouseClickListener implements MouseListener
             if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
             {
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ,true));
-               game.setStartBarFill(false);
-                return;
             }
                
-            if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
+            else if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
             {
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ) );
-                game.setStartBarFill(false);
-                return;
             }
             
-            if(totalTimePressed > game.MAX_CLICK_TIME)
-                totalTimePressed = game.MAX_CLICK_TIME;
-                
-            double speed = (totalTimePressed/(double)game.MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5) ;
-            game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX(), (int)speed + 5 ) );
-           
+            else
+            {
+                if(totalTimePressed > MAX_CLICK_TIME)
+                    totalTimePressed = MAX_CLICK_TIME;
+                double speed = (totalTimePressed/(double)MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5);
+                game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX(), (int)speed + 5 ) );
+            }
         }
         game.setStartBarFill(false);
     }

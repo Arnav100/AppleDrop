@@ -1,6 +1,7 @@
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 
@@ -33,6 +34,9 @@ public class AppleDrop extends JPanel implements ActionListener
     private static final int THREE = 3;
     private static final int TRAP_POINTS = 4;
     
+    private int player1Points;
+    private int player2Points;
+    
     private int panelWidth;
     private int panelHeight;
     
@@ -53,7 +57,8 @@ public class AppleDrop extends JPanel implements ActionListener
     public AppleDrop()
     {
         apples = new ArrayList< Apple >();
-        
+        player1Points = 0;
+        player2Points = 0;
         first = true;
     }
     
@@ -99,24 +104,50 @@ public class AppleDrop extends JPanel implements ActionListener
     private void update()
     {
         
-        if( keys[  KeyboardListener.Keys.RIGHT.get() ] )
+        if( keys[  KeyboardListener.RIGHT] )
             for( Basket basket : baskets )
                 basket.moveRight();
-        if( keys[ KeyboardListener.Keys.LEFT.get() ] )
+        if( keys[ KeyboardListener.LEFT ] )
             for( Basket basket : baskets )
                 basket.moveLeft();
-        if( keys[  KeyboardListener.Keys.SPACE.get() ] )
-        {
+        if( keys[  KeyboardListener.SPACE] )       {
+            System.out.println("Space is clicked");
             for( Apple apple : apples )
             {
                 for( Basket basket : baskets )
                     if( basket.contains( apple ) )
+                    {
                         apple.swat();
+                        if(apple.getColor().equals(Colour.BROWN))
+                            player2Points += apple.getPointValue(); 
+                        else
+                            player1Points += apple.getPointValue();
+                    }
+                }
+        }
+        
+        for(  int i = 0; i < apples.size(); i ++)
+         {
+             if(apples.get(i).getSpeed() < 0 )
+                continue;
+             for( Basket basket : baskets )
+                if( basket.contains( apples.get(i) ) )
+                 {
+                        System.out.println(apples.get(i).getPointValue());
+                        
+                        player1Points += apples.get(i).getPointValue();
+                        apples.remove(i);
+                }
+                else if(apples.get(i).getY() > getHeight() - basket.getHeight()/2.0)
+                {
+                     System.out.println("Code 2");
+                     player2Points += apples.get(i).getPointValue();
+                     apples.remove(i);
                 }
         }
        
     }
- 
+    
     
     int size;
     public void paintComponent( Graphics g )
@@ -132,6 +163,7 @@ public class AppleDrop extends JPanel implements ActionListener
         }
         
         drawSpeedBar(g);
+        drawPoints(g);
         for( Basket basket : baskets )
         {
             g.setColor( basket.getColor() );
@@ -140,7 +172,14 @@ public class AppleDrop extends JPanel implements ActionListener
                 g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
         }
     }
-    public final int MAX_CLICK_TIME = 5000;
+    
+    private void drawPoints(Graphics g)
+    {
+        g.setColor(Colour.BLACK);
+        g.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
+        g.drawString(player1Points + "  /  " + player2Points, (int)(getWidth()/10*1), (int)(getHeight()/12 * 0.5));
+    }
+    
     private void drawSpeedBar(Graphics g)
     {
         int widthPorportion = getWidth()/10;
@@ -165,7 +204,7 @@ public class AppleDrop extends JPanel implements ActionListener
         if(startBarFill)
         {
             g.setColor(Colour.GREEN);
-            double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MAX_CLICK_TIME;
+            double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MouseClickListener.MAX_CLICK_TIME;
             if(timePorportion > 1)
                 timePorportion = 1;
             g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),

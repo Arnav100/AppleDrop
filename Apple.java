@@ -49,8 +49,20 @@ public class Apple
    public int getY()
    {
        return y;
-    }
+   }
+    
+   public int getPointValue()
+   {
+       if(color.equals(Colour.RED))
+            return 1;
+       return (int)(Math.abs(moveSpeed)/(double)MAX_SPEED * 5);
+   }
 
+   public int getSpeed()
+   {
+    return moveSpeed;
+    }
+   
    public int getSize()
    {
        return radius*2;

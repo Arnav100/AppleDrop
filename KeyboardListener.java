@@ -12,19 +12,8 @@ public class KeyboardListener implements KeyListener
     
     private boolean[] keys;
     
-    public enum Keys {
-        RIGHT(0), LEFT(1), SPACE(2), ESCAPE(3);
-        private final int index;
-        Keys(int index)
-        {
-            this.index = index;
-        }
-        
-        public int get()
-        {
-            return index;
-        }
-    }
+
+    public static int RIGHT = 0, LEFT = 1, SPACE = 2, ESCAPE = 3;
 
     public KeyboardListener(AppleDrop a)
     {
@@ -36,11 +25,11 @@ public class KeyboardListener implements KeyListener
     {
        
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ Keys.RIGHT.get() ] = true;
+            keys[ RIGHT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ Keys.LEFT.get() ] = true;
+            keys[ LEFT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ Keys.SPACE.get() ] = true;
+            keys[ SPACE ] = true;
         game.setKeys(keys);
     }
 
@@ -48,11 +37,11 @@ public class KeyboardListener implements KeyListener
     public void keyReleased( KeyEvent ke)
     {
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ Keys.RIGHT.get()  ] = false;
+            keys[ RIGHT  ] = false;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ Keys.LEFT.get() ] = false;
+            keys[ LEFT ] = false;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ Keys.SPACE.get() ] = false;
+            keys[ SPACE ] = false;
         game.setKeys(keys);
     }
     

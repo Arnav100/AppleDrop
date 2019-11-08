@@ -31,17 +31,25 @@ public class Basket
     
     public boolean contains( Apple apple )
     {
-        int h = apple.getX();
-        int k = apple.getY();
-        int radius = apple.getSize() / 2;
-        if( past <= 0)
-            return h >= x + radius && h <= x + bigWidth - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
-        if( past > 0 )
-            return h >= x + radius && h <= past - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
-        return h >= screenWidth + x && h <= x + bigWidth - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
+        int appleX = apple.getX();
+        int appleY = apple.getY();
+        if(appleY < screenHeight - basketHeight)
+            return false;
+
+        return (appleX > x && appleX <  x + bigWidth) || (past > 0 && appleX < past) ;
+           
+        
+        // int h = apple.getX();
+        // int k = apple.getY();
+        // int radius = apple.getSize() / 2;
+        // if( past <= 0)
+            // return h >= x + radius && h <= x + bigWidth - radius && k > screenHeight -
+            // basketHeight - radius && k <= screenHeight;
+        // if( past > 0 )
+            // return h >= x + radius && h <= past - radius && k > screenHeight -
+            // basketHeight - radius && k <= screenHeight;
+        // return h >= screenWidth + x && h <= x + bigWidth - radius && k > screenHeight -
+            // basketHeight - radius && k <= screenHeight;
     }
     
     public void moveRight()
