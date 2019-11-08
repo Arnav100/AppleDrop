@@ -12,16 +12,18 @@ public class Apple
    private int x, y;
    private int moveSpeed;
    private Color color; 
+   public static final int RED_SPEED = 5;
    public static final int MAX_SPEED = 25;
+   private static final int POINT_SPEED_RATIO = 5;
    
    public Apple(int screenWidth, int screenHeight, int clickX)
    {
-       this(screenWidth, screenHeight, clickX, 5);
+       this(screenWidth, screenHeight, clickX, RED_SPEED );
        color = Colour.RED;
    }
    public Apple(int screenWidth, int screenHeight, int clickX, boolean isBrown)
    {
-      this(screenWidth, screenHeight, clickX, MAX_SPEED/2);
+      this(screenWidth, screenHeight, clickX, MAX_SPEED / 2);
       if(isBrown)
         color = Colour.BROWN;
       else
@@ -34,7 +36,7 @@ public class Apple
        this.y = 0;
        this.radius = screenWidth/SCREEN_PORPORTION;
        this.moveSpeed = moveSpeed;
-       color = Colour.GREEN;
+       color = Colour.LIME_GREEN;
     }
    public void move()
    {
@@ -55,7 +57,7 @@ public class Apple
    {
        if(color.equals(Colour.RED))
             return 1;
-       return (int)(Math.abs(moveSpeed)/(double)MAX_SPEED * 5);
+       return (int)( Math.abs( moveSpeed ) / (double)MAX_SPEED * POINT_SPEED_RATIO );
    }
 
    public int getSpeed()
@@ -65,7 +67,7 @@ public class Apple
    
    public int getSize()
    {
-       return radius*2;
+       return radius * 2;
    }
    
    public Color getColor()

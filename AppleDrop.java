@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 /**
  * Write a description of class AppleDrop here.
  *
@@ -30,10 +31,28 @@ public class AppleDrop extends JPanel implements ActionListener
     private static final Rectangle SCREEN_DIMENSIONS = new Rectangle( 0, 0, MAX_WIDTH,
     MAX_HEIGHT );
     
-    private static final int QUARTER = 4;
     private static final int THREE = 3;
+    private static final int FIVE = 5;
+    private static final int SEVEN = 7;
+    private static final int FIFTEEN = 15;
+    private static final int TWENTY_THREE = 23;
+    
+    private static final int THIRD = 3;
+    private static final int FOURTH = 4; 
+    private static final int FIFTH = 5;
+    private static final int TENTH = 10;
+    private static final int TWELFTH = 12;
+    private static final int SIXTEENTH = 16;
+    private static final int EIGHTH = 8;
+    private static final int TWENTY_FOURTH = 24;
+    private static final int THIRTY_SECONDTH = 32;
+    
+    private static final int FONT_SIZE = 24;
+    private static final int HALF_CIRCLE = 180;
+    private static final int INCREMENT = 20;
     private static final int TRAP_POINTS = 4;
     private static final int NUM_KEYS = 4;
+    private static final int FOURTH_ELEMENT = 3;
     
     private int player1Points;
     private int player2Points;
@@ -71,19 +90,9 @@ public class AppleDrop extends JPanel implements ActionListener
         repaint();
     }
     
-    public Basket[] getBaskets()
-    {
-        return baskets;
-    }
-    
     public ArrayList<Apple> getApples()
     {
         return apples;
-    }
-    
-    public void setKeys(boolean[] keys)
-    {
-        this.keys = keys;
     }
     
     public boolean[] getKeys()
@@ -91,7 +100,7 @@ public class AppleDrop extends JPanel implements ActionListener
         return keys;
     }
     
-    public void setPressedTime(long t)
+    public void setPressedTime( long t)
     {
         pressedTime = t;
     }
@@ -123,7 +132,6 @@ public class AppleDrop extends JPanel implements ActionListener
   
     private void update()
     {
-        
         if( keys[  KeyboardListener.RIGHT] )
             for( Basket basket : baskets )
                 basket.moveRight();
@@ -140,37 +148,45 @@ public class AppleDrop extends JPanel implements ActionListener
                         else
                             player1Points += apple.getPointValue();
                     }
-               
-        
-        outer: for(  int i = 0; i < apples.size(); i ++) {
-         
+          
+        outer: for(  int i = 0; i < apples.size(); i++ )
+        {
             if(apples.get(i).getSpeed() < 0 )
                continue;
             for( Basket basket : baskets )
-                if( basket.contains(apples.get(i))) {
-                        if(apples.get(i).getColor().equals(Colour.BROWN))
+                if( basket.contains( apples.get(i) ) )
+                {
+                        if( apples.get(i).getColor().equals( Colour.BROWN ) )
                             player1Points += apples.get(i).getPointValue(); 
                         else
                             player2Points += apples.get(i).getPointValue();
                         apples.remove(i);
                         break outer; 
                 }
-            
             if( apples.get(i).getY() > getHeight() - baskets[0].getHeight()/2.0) {
                      player1Points += apples.get(i).getPointValue();
                      apples.remove(i);
             }
         }
-       
     }
     
     
-   
     public void paintComponent( Graphics g )
     {
         if( first )
             initialize();
+            
         background( g );
+        
+        for( Basket basket : baskets )
+        {
+            g.setColor( Colour.WHITE );
+            g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS );
+            if(  basket.getPast() > 0 )
+                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(),
+                TRAP_POINTS );
+        }
+        
         for( Apple apple : apples )
         {
             g.setColor( apple.getColor() );
@@ -178,29 +194,65 @@ public class AppleDrop extends JPanel implements ActionListener
             g.fillOval( apple.getX(), apple.getY(), size, size );
         }
         
-        drawSpeedBar(g);
-        drawPoints(g);
         for( Basket basket : baskets )
         {
             g.setColor( Colour.CHOCOLATE_TRANSLUCENT );
             g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
             g.setColor( Colour.CHOCOLATE );
             for( int[] line : basket.getLines() )
-            {
-                g.drawLine( line[0], line[1], line[2], line[3] );
-            }
+                g.drawLine( line[0], line[1], line[2], line[ FOURTH_ELEMENT ] );
             if(  basket.getPast() > 0 )
-                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
+            {    
+                g.setColor( Colour.CHOCOLATE_TRANSLUCENT );
+                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(),
+                TRAP_POINTS );
+                g.setColor( Colour.CHOCOLATE );
+                for( int[] line : basket.getLines( true ) )
+                    g.drawLine( line[0], line[1], line[2], line[ FOURTH_ELEMENT ] );
+            }
         }
+        
+        drawSpeedBar(g);
+        drawPoints(g);
     }
-    
-    private void drawPoints(Graphics g)
+    private void initialize()
     {
-        g.setColor(Colour.BLACK);
-        g.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
-        g.drawString(player1Points + "  /  " + player2Points, (int)(getWidth()/10*1), (int)(getHeight()/12 * 0.5));
+        panelWidth = this.getWidth();
+        panelHeight = this.getHeight();
+        
+        time = 0;
+        Timer clock = new Timer( INCREMENT, this ); 
+        clock.start();
+            
+        keys = new boolean[ NUM_KEYS ];
+
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / FOURTH ),
+        new Basket( panelWidth, panelHeight, THREE * panelWidth / FOURTH ) };
+        
+
+        first = false;
     }
-    
+    private void background( Graphics g )
+    {
+        g.setColor( Colour.LIGHT_BLUE );
+        g.fillRect( 0, 0, panelWidth, panelHeight / 2 );
+        g.setColor( Colour.GRASS_GREEN );
+        g.fillRect( 0, panelHeight / 2, panelWidth, panelHeight / 2 );
+        g.setColor( Colour.SUBDUED_GREEN );
+        g.fillArc( panelWidth / FOURTH, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0,
+        HALF_CIRCLE );
+        g.setColor( Colour.GREEN );
+        g.fillArc( 0, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0, HALF_CIRCLE );
+        g.fillArc( panelWidth / 2, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0,
+        HALF_CIRCLE );
+        g.setColor( Colour.SUBDUED_CHOCOLATE );
+        g.fillRect( SEVEN * panelWidth / THIRTY_SECONDTH, THREE * panelHeight / 
+        EIGHTH, panelWidth / SIXTEENTH, panelHeight / FOURTH );
+        g.fillRect( FIFTEEN * panelWidth / THIRTY_SECONDTH, THREE * panelHeight / 
+        EIGHTH, panelWidth / SIXTEENTH, FIVE * panelHeight / THIRTY_SECONDTH );
+        g.fillRect( TWENTY_THREE * panelWidth / THIRTY_SECONDTH, THREE * panelHeight / 
+        EIGHTH, panelWidth / SIXTEENTH, panelHeight / FOURTH );
+    }
     private void drawSpeedBar(Graphics g)
     {
         int widthPorportion = getWidth()/10;
@@ -231,13 +283,15 @@ public class AppleDrop extends JPanel implements ActionListener
                 timePorportion = 1;
             }
             int roundingFix = 1;
-            g.fillRect((int)(widthPorportion  * (widthPlacement - (1 - timePorportion) * leftwardMovement) ), (int)(heightPorportion*heightPlacement),
-                        (int)(widthPorportion * leftwardMovement* (1 - timePorportion) + roundingFix), (int)(heightPorportion * heightMultiplier));
+            g.fillRect((int)(widthPorportion  * (widthPlacement - (1 - timePorportion) * leftwardMovement) ), 
+                       (int)(heightPorportion*heightPlacement ),
+                       (int)(widthPorportion * leftwardMovement* (1 - timePorportion) + roundingFix), 
+                       (int)(heightPorportion * heightMultiplier ));
         }
         
         if(startBarFill)
         {
-            g.setColor(Colour.GREEN);
+            g.setColor(Colour.LIME_GREEN);
             double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MouseClickListener.MAX_CLICK_TIME;
             double redAppleTime = MouseClickListener.NORMAL_APPLE_CLICK_LIMIT/(double)MouseClickListener.MAX_CLICK_TIME;
             if(timePorportion > 1)
@@ -248,32 +302,12 @@ public class AppleDrop extends JPanel implements ActionListener
                         (int)(widthPorportion * widthMultiplier * timePorportion), (int)(heightPorportion * heightMultiplier));
         }
     }
-    
-    private void drawTimer( Graphics g )
+    private void drawPoints(Graphics g)
     {
-        int widthProportion = getWidth() / 10;
-    }
-    
-    private void background( Graphics g )
-    {
-        super.paintComponent( g );
-    }
-    private void initialize()
-    {
-        panelWidth = this.getWidth();
-        panelHeight = this.getHeight();
-        
-        time = 0;
-        Timer clock = new Timer( 20 /*what should this be*/, this ); 
-        clock.start();
-            
-        keys = new boolean[ NUM_KEYS ];
-
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / QUARTER ),
-        new Basket( panelWidth, panelHeight, THREE * panelWidth / QUARTER ) };
-        
-
-        first = false;
+        g.setColor( Colour.BLACK );
+        g.setFont( new Font( Font.DIALOG, Font.BOLD, FONT_SIZE ) );
+        g.drawString( player1Points + "  /  " + player2Points, getWidth() / SIXTEENTH,
+        getHeight() / TWENTY_FOURTH );
     }
     
     public static void main( String[] args )
@@ -283,8 +317,8 @@ public class AppleDrop extends JPanel implements ActionListener
         
         AppleDrop ad = new AppleDrop();
         
-        frame.addKeyListener( new KeyboardListener(ad) );
-        frame.addMouseListener( new MouseClickListener(ad) );
+        frame.addKeyListener( new KeyboardListener( ad ) );
+        frame.addMouseListener( new MouseClickListener( ad ) );
         frame.add( ad );
         
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -293,29 +327,4 @@ public class AppleDrop extends JPanel implements ActionListener
         
         frame.setVisible( true );
     }
-    
-    /*Player1 = mouse 
-     * red apples - slow, left-click + points for p1
-     * green apples - faster (variable speed, length held) left-click + more pts for p1
-     * brown rotten apples - medium speed, right-click - remove pts for p2
-     * 
-     * Player2 = keyboard
-     * 
-     * left/right + <space> swatting away bad apples
-     * 
-     * 
-     * Ideas: 
-     * 
-     * All speeds should be written as relative to the screen size
-     * 
-     * 1 point for red and then a point based on a ratio of points to speed
-     * 
-     * Basket should wrap around to the other side of the screen if it hits one end
-     * 
-     * 1 minute rounds, number can be adjusted later
-     * 
-     * Mac:
-     * 
-     * setExtendedState java
-    */
 }

@@ -16,7 +16,12 @@ public class Basket
     SCREEN_PORPORTION_FOR_SMALL_WIDTH = 16;
     private final int SCREEN_PORPORTION_FOR_HEIGHT = 16;
     private final int SPEED = 20;
+    private final int THIRD = 3;
+    private final int THREE = 3;
+    private final int FOUR = 4;
+    private final int FIFTH = 5;
     private final int FOURTH_ELEMENT = 3;
+    
     public Basket(int screenWidth, int screenHeight, int initialCenter )
     {
         this.bigWidth = screenWidth/SCREEN_PORPORTION_FOR_BIG_WIDTH;
@@ -36,19 +41,6 @@ public class Basket
             return false;
 
         return (appleX > x && appleX <  x + bigWidth) || (past > 0 && appleX < past) ;
-           
-        
-        // int h = apple.getX();
-        // int k = apple.getY();
-        // int radius = apple.getSize() / 2;
-        // if( past <= 0)
-            // return h >= x + radius && h <= x + bigWidth - radius && k > screenHeight -
-            // basketHeight - radius && k <= screenHeight;
-        // if( past > 0 )
-            // return h >= x + radius && h <= past - radius && k > screenHeight -
-            // basketHeight - radius && k <= screenHeight;
-        // return h >= screenWidth + x && h <= x + bigWidth - radius && k > screenHeight -
-            // basketHeight - radius && k <= screenHeight;
     }
     
     public void moveRight()
@@ -57,7 +49,6 @@ public class Basket
         if(x > screenWidth)
             x = 0;
         past = x + bigWidth - screenWidth;
-
     }
     
     public void moveLeft()
@@ -92,10 +83,10 @@ public class Basket
         if( !isSplit )
         {
             int minY = screenHeight - basketHeight;
-            int[] xs = new int[]{ x + bigWidth / 5, x + 2 * bigWidth / 5, x + 3 *
-                bigWidth / 5, x + 4 * bigWidth / 5 };
+            int[] xs = new int[]{ x + bigWidth / FIFTH, x + 2 * bigWidth / FIFTH, x +
+                THREE * bigWidth / FIFTH, x + FOUR * bigWidth / FIFTH };
             int[] ys = new int[]{ minY, screenHeight - 2 *
-                basketHeight / 3, screenHeight - basketHeight / 3,};
+                basketHeight / THIRD, screenHeight - basketHeight / THIRD,};
             return new int[][]{ new int[]{ xs[0], minY, xs[0], getYLeft( xs[0] ) },
                 new int[]{ xs[1], minY, xs[1], getYLeft( xs[1] ) }, 
                 new int[]{ xs[2], minY, xs[2], getYRight( xs[2] ) }, 
@@ -104,7 +95,8 @@ public class Basket
                 new int[]{ getXLeft( ys[1] ), ys[1], getXRight( ys[1] ), ys[1] }, 
                 new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),ys[2] } };
         }
-        return ( new Basket( screenWidth, screenHeight, screenWidth + x ) ).getLines();
+        return ( new Basket( screenWidth, screenHeight, x - screenWidth + smallWidth ) ).
+        getLines();
     }
     private int getXLeft( int y )
     {
@@ -136,7 +128,6 @@ public class Basket
         int diff = (bigWidth-smallWidth)/2;
         if( !isSplit )
             return new int[]{x, x + bigWidth, x + bigWidth - diff, x + diff };
-       
         return new int[]{ past - bigWidth, past,
             past - diff, past - bigWidth + diff };
     }
