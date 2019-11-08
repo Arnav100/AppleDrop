@@ -57,7 +57,6 @@ public class AppleDrop extends JPanel implements ActionListener
     private boolean[] keys;
     public AppleDrop()
     {
-        System.out.println("test");
         apples = new ArrayList< Apple >();
         player1Points = 0;
         player2Points = 0;
@@ -102,9 +101,24 @@ public class AppleDrop extends JPanel implements ActionListener
         return pressedTime;
     }
     
+    public long getLastPressedTime()
+    {
+        return lastPressedTime;
+    }
+    
+    public void setLastPressedTime(long t)
+    {
+        lastPressedTime = t;
+    }
+    
     public void setStartBarFill(boolean s)
     {
         startBarFill = s;
+    }
+    
+    public void setRecoilBar(boolean r)
+    {
+        recoilBar = r;
     }
   
     private void update()
@@ -195,25 +209,41 @@ public class AppleDrop extends JPanel implements ActionListener
         int heightPorportion = getHeight()/12;
         double heightPlacement = 0.5;
         double heightMultiplier = 1;
+        double leftwardMovement = 0.5;
         
 
         g.setColor(Colour.WHITE);
-        g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
-                    (int)(widthPorportion * widthMultiplier), (int)(heightPorportion * heightMultiplier));
+        g.fillRect((int)(widthPorportion * (widthPlacement - leftwardMovement)), (int)(heightPorportion*heightPlacement),
+                    (int)(widthPorportion * (widthMultiplier + leftwardMovement)), (int)(heightPorportion * heightMultiplier));
         g.setColor(Colour.BLACK);
         g.drawRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
                     (int)(widthPorportion * widthMultiplier), (int)(heightPorportion * heightMultiplier));
+        g.drawRect((int)(widthPorportion * (widthPlacement - leftwardMovement)), (int)(heightPorportion*heightPlacement),
+                    (int)(widthPorportion * leftwardMovement), (int)(heightPorportion * heightMultiplier));
         if(recoilBar)
         {
             g.setColor(Colour.BLUE);
+            double timePorportion = (System.currentTimeMillis() - lastPressedTime)/(double)MouseClickListener.TIME_BETWEEN_CLICKS;
+            
+            if(timePorportion > 1)
+            {
+                recoilBar = false;
+                timePorportion = 1;
+            }
+            int roundingFix = 1;
+            g.fillRect((int)(widthPorportion  * (widthPlacement - (1 - timePorportion) * leftwardMovement) ), (int)(heightPorportion*heightPlacement),
+                        (int)(widthPorportion * leftwardMovement* (1 - timePorportion) + roundingFix), (int)(heightPorportion * heightMultiplier));
         }
         
         if(startBarFill)
         {
             g.setColor(Colour.GREEN);
             double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MouseClickListener.MAX_CLICK_TIME;
+            double redAppleTime = MouseClickListener.NORMAL_APPLE_CLICK_LIMIT/(double)MouseClickListener.MAX_CLICK_TIME;
             if(timePorportion > 1)
                 timePorportion = 1;
+            if(timePorportion < redAppleTime)
+                g.setColor(Colour.RED);
             g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
                         (int)(widthPorportion * widthMultiplier * timePorportion), (int)(heightPorportion * heightMultiplier));
         }

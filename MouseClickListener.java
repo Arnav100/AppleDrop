@@ -11,6 +11,8 @@ public class MouseClickListener implements MouseListener
 {
     private AppleDrop game;
     public static final int MAX_CLICK_TIME = 5000;
+    public static final int TIME_BETWEEN_CLICKS = 1000;
+    public static final int NORMAL_APPLE_CLICK_LIMIT = 500;
     public MouseClickListener(AppleDrop a)
     {
         game = a;
@@ -25,32 +27,26 @@ public class MouseClickListener implements MouseListener
     }
     
     
-    private long lastPressedTime;
+    
     
     public void mouseReleased(MouseEvent me)
     {
-        if( game.getPressedTime() - lastPressedTime >= 1000 )
+        if( game.getPressedTime() - game.getLastPressedTime() >= TIME_BETWEEN_CLICKS )
         { 
             
-            lastPressedTime = game.getPressedTime();
+            game.setLastPressedTime(game.getPressedTime());
             long totalTimePressed = System.currentTimeMillis() -  game.getPressedTime();
-            if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
-            {
+            if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < NORMAL_APPLE_CLICK_LIMIT)
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ,true));
-            }
-               
-            else if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
-            {
+            else if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < NORMAL_APPLE_CLICK_LIMIT )
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ) );
-            }
-            
-            else
-            {
+            else {
                 if(totalTimePressed > MAX_CLICK_TIME)
                     totalTimePressed = MAX_CLICK_TIME;
                 double speed = (totalTimePressed/(double)MAX_CLICK_TIME)*(Apple.MAX_SPEED - 5);
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX(), (int)speed + 5 ) );
             }
+            game.setRecoilBar(true);
         }
         game.setStartBarFill(false);
     }
@@ -59,7 +55,11 @@ public class MouseClickListener implements MouseListener
     public void mousePressed(MouseEvent me)
     {
         game.setPressedTime(System.currentTimeMillis());
-        game.setStartBarFill(true);
+        if(game.getPressedTime() - game.getLastPressedTime() >= TIME_BETWEEN_CLICKS )
+        {
+            game.setRecoilBar(false);
+            game.setStartBarFill(true);
+        }
     }
     
     public void mouseClicked(MouseEvent me)
