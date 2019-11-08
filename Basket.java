@@ -12,11 +12,11 @@ public class Basket
     private int bigWidth, smallWidth, screenWidth;
     private int basketHeight, screenHeight;
     private int moveSpeed;
-    private Color color;
     private final int SCREEN_PORPORTION_FOR_BIG_WIDTH = 8,
     SCREEN_PORPORTION_FOR_SMALL_WIDTH = 16;
     private final int SCREEN_PORPORTION_FOR_HEIGHT = 16;
     private final int SPEED = 20;
+    private final int FOURTH_ELEMENT = 3;
     public Basket(int screenWidth, int screenHeight, int initialCenter )
     {
         this.bigWidth = screenWidth/SCREEN_PORPORTION_FOR_BIG_WIDTH;
@@ -26,7 +26,6 @@ public class Basket
         this.basketHeight = screenHeight/SCREEN_PORPORTION_FOR_HEIGHT;
         this.x = initialCenter - bigWidth / 2;
         this.moveSpeed = SPEED;
-        this.color = Colour.CHOCOLATE_TRANSLUCENT;
     }
     
     public boolean contains( Apple apple )
@@ -67,12 +66,6 @@ public class Basket
         if(x < 0)
             x = screenWidth;
         past = x + bigWidth - screenWidth;
-
-    }
-    
-    public Color getColor()
-    {
-        return color;
     }
     
     public int getHeight()
@@ -90,6 +83,52 @@ public class Basket
         return x;
     }
     
+    public int[][] getLines()
+    {
+        return getLines( false );
+    }
+    public int[][] getLines( boolean isSplit )
+    {
+        if( !isSplit )
+        {
+            int minY = screenHeight - basketHeight;
+            int[] xs = new int[]{ x + bigWidth / 5, x + 2 * bigWidth / 5, x + 3 *
+                bigWidth / 5, x + 4 * bigWidth / 5 };
+            int[] ys = new int[]{ minY, screenHeight - 2 *
+                basketHeight / 3, screenHeight - basketHeight / 3,};
+            return new int[][]{ new int[]{ xs[0], minY, xs[0], getYLeft( xs[0] ) },
+                new int[]{ xs[1], minY, xs[1], getYLeft( xs[1] ) }, 
+                new int[]{ xs[2], minY, xs[2], getYRight( xs[2] ) }, 
+                new int[]{ xs[ FOURTH_ELEMENT ], minY, xs[ FOURTH_ELEMENT ],
+                getYRight( xs[ FOURTH_ELEMENT ] ) }, 
+                new int[]{ getXLeft( ys[0] ), ys[0], getXRight( ys[0] ),
+                ys[0] }, new int[]{ getXLeft( ys[1] ), ys[1], getXRight( ys[1] ),
+                ys[1] }, new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),
+                ys[2] } };
+        }
+        return ( new Basket( screenWidth, screenHeight, screenWidth + x ) ).getLines();
+    }
+    private int getXLeft( int y )
+    {
+        double m = 2.0 * basketHeight / ( bigWidth - smallWidth );
+        return (int)( ( y - screenHeight + basketHeight + m * x ) / m );
+    }
+    private int getXRight( int y )
+    {
+        double m = -2.0 * basketHeight / ( bigWidth - smallWidth );
+        return (int)( ( y - screenHeight + basketHeight + m * ( x + bigWidth ) ) / m );
+    }
+    private int getYLeft( int x )
+    {
+        double m = 2.0 * basketHeight / ( bigWidth - smallWidth );
+        return (int)( m * ( x - this.x ) + screenHeight - basketHeight );
+    }
+    private int getYRight( int x )
+    {
+        double m = -2.0 * basketHeight / ( bigWidth - smallWidth );
+        return (int)( m * ( x - this.x - bigWidth ) + screenHeight - basketHeight );
+    }
+    
     public int[] getXCoords()
     {
         return getXCoords( false );
@@ -102,7 +141,6 @@ public class Basket
        
         return new int[]{ past - bigWidth, past,
             past - diff, past - bigWidth + diff };
-      
     }
     
     public int[] getYCoords()

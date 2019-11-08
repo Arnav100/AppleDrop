@@ -20,13 +20,14 @@ public class KeyboardListener implements KeyListener
     
     public void keyPressed( KeyEvent ke)
     {
-       
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
             game.getKeys()[ RIGHT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
             game.getKeys()[ LEFT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
             game.getKeys()[ SPACE ] = true;
+        if( ke.getKeyCode() == KeyEvent.VK_ESCAPE )
+            game.getKeys()[ ESCAPE ] = true;
     }
 
     

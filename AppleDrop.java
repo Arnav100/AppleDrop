@@ -33,6 +33,7 @@ public class AppleDrop extends JPanel implements ActionListener
     private static final int QUARTER = 4;
     private static final int THREE = 3;
     private static final int TRAP_POINTS = 4;
+    private static final int NUM_KEYS = 4;
     
     private int player1Points;
     private int player2Points;
@@ -56,6 +57,7 @@ public class AppleDrop extends JPanel implements ActionListener
     private boolean[] keys;
     public AppleDrop()
     {
+        System.out.println("test");
         apples = new ArrayList< Apple >();
         player1Points = 0;
         player2Points = 0;
@@ -105,7 +107,6 @@ public class AppleDrop extends JPanel implements ActionListener
         startBarFill = s;
     }
   
-    int x;
     private void update()
     {
         
@@ -125,33 +126,32 @@ public class AppleDrop extends JPanel implements ActionListener
                         else
                             player1Points += apple.getPointValue();
                     }
-                
+               
         
-        
-        for(  int i = 0; i < apples.size(); i ++)
-         {
-             if(apples.get(i).getSpeed() < 0 )
-                continue;
-             for( Basket basket : baskets )
-                if( basket.contains( apples.get(i) ) )
-                 {
+        outer: for(  int i = 0; i < apples.size(); i ++) {
+         
+            if(apples.get(i).getSpeed() < 0 )
+               continue;
+            for( Basket basket : baskets )
+                if( basket.contains(apples.get(i))) {
                         if(apples.get(i).getColor().equals(Colour.BROWN))
                             player1Points += apples.get(i).getPointValue(); 
                         else
                             player2Points += apples.get(i).getPointValue();
                         apples.remove(i);
+                        break outer; 
                 }
-                else if(apples.get(i).getY() > getHeight() - basket.getHeight()/2.0)
-                {
+            
+            if( apples.get(i).getY() > getHeight() - baskets[0].getHeight()/2.0) {
                      player1Points += apples.get(i).getPointValue();
                      apples.remove(i);
-                }
+            }
         }
        
     }
     
     
-    int size;
+   
     public void paintComponent( Graphics g )
     {
         if( first )
@@ -160,7 +160,7 @@ public class AppleDrop extends JPanel implements ActionListener
         for( Apple apple : apples )
         {
             g.setColor( apple.getColor() );
-            size = apple.getSize();
+            int size = apple.getSize();
             g.fillOval( apple.getX(), apple.getY(), size, size );
         }
         
@@ -168,8 +168,13 @@ public class AppleDrop extends JPanel implements ActionListener
         drawPoints(g);
         for( Basket basket : baskets )
         {
-            g.setColor( basket.getColor() );
+            g.setColor( Colour.CHOCOLATE_TRANSLUCENT );
             g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
+            g.setColor( Colour.CHOCOLATE );
+            for( int[] line : basket.getLines() )
+            {
+                g.drawLine( line[0], line[1], line[2], line[3] );
+            }
             if(  basket.getPast() > 0 )
                 g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
         }
@@ -232,10 +237,10 @@ public class AppleDrop extends JPanel implements ActionListener
         Timer clock = new Timer( 20 /*what should this be*/, this ); 
         clock.start();
             
-        keys = new boolean[4];
+        keys = new boolean[ NUM_KEYS ];
 
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / 4 ),
-      /*  new Basket( panelWidth, panelHeight, 3 * panelWidth / 4 )*/ };
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / QUARTER ),
+        new Basket( panelWidth, panelHeight, THREE * panelWidth / QUARTER ) };
         
 
         first = false;
