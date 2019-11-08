@@ -85,6 +85,11 @@ public class AppleDrop extends JPanel implements ActionListener
         this.keys = keys;
     }
     
+    public boolean[] getKeys()
+    {
+        return keys;
+    }
+    
     public void setPressedTime(long t)
     {
         pressedTime = t;
@@ -133,15 +138,15 @@ public class AppleDrop extends JPanel implements ActionListener
              for( Basket basket : baskets )
                 if( basket.contains( apples.get(i) ) )
                  {
-                        System.out.println(apples.get(i).getPointValue());
-                        
-                        player1Points += apples.get(i).getPointValue();
+                        if(apples.get(i).getColor().equals(Colour.BROWN))
+                            player1Points += apples.get(i).getPointValue(); 
+                        else
+                            player2Points += apples.get(i).getPointValue();
                         apples.remove(i);
                 }
                 else if(apples.get(i).getY() > getHeight() - basket.getHeight()/2.0)
                 {
-                     System.out.println("Code 2");
-                     player2Points += apples.get(i).getPointValue();
+                     player1Points += apples.get(i).getPointValue();
                      apples.remove(i);
                 }
         }
