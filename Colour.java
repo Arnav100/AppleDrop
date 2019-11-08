@@ -22,6 +22,8 @@ public class Colour
             
             LIME_GREEN = new Color(0, 255, 0),
             GREEN = new Color(0,128,0),
+            SUBDUED_GREEN = new Color(0,145,0),
+            GRASS_GREEN = new Color(0,180,0),
             DARK_GREEN = new Color(0, 64, 0),
             MINT_GREEN = new Color(192,255,192),
             
@@ -49,8 +51,8 @@ public class Colour
             
             ORANGE = new Color(255, 128, 0),
             CHOCOLATE = new Color(128, 64, 0),
+            SUBDUED_CHOCOLATE = new Color(145, 81, 0),
+            CHOCOLATE_TRANSLUCENT = new Color(128,64,0,160),            
             BROWN = new Color(192, 96, 0),
-            CHOCOLATE_TRANSLUCENT = new Color(128, 64, 0, 124),
             LIGHT_ORANGE = new Color(255, 192, 64);
-            
 }

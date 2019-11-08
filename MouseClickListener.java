@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 public class MouseClickListener implements MouseListener
 {
     private AppleDrop game;
+    public static final int MAX_CLICK_TIME = 5000;
     
     public MouseClickListener(AppleDrop a)
     {
@@ -25,42 +26,43 @@ public class MouseClickListener implements MouseListener
     }
     
     
-    private  long lastPressedTime;
-    
+    private long lastPressedTime;
     public void mouseReleased(MouseEvent me)
     {
         if( game.getPressedTime() - lastPressedTime >= 1000 )
         { 
-            
             lastPressedTime = game.getPressedTime();
             long totalTimePressed = System.currentTimeMillis() -  game.getPressedTime();
             if(me.getButton() == MouseEvent.BUTTON3 && totalTimePressed < 500)
             {
-                game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ,true));
+                game.getApples().add( new Apple( game.getWidth(), game.getHeight(),
+                me.getX() ,true ) );
             }
                
             else if(me.getButton() == MouseEvent.BUTTON1 && totalTimePressed < 500 )
             {
-                game.getApples().add( new Apple( game.getWidth(), game.getHeight(), me.getX() ) );
+                game.getApples().add( new Apple( game.getWidth(), game.getHeight(),
+                me.getX() ) );
             }
             
             else
             {
-                totalTimePressed = game.MAX_CLICK_TIME;
-                double speed = (totalTimePressed/(double)game.MAX_CLICK_TIME)*
-                (Apple.MAX_SPEED - 5);
+                if( totalTimePressed > MAX_CLICK_TIME )
+                    totalTimePressed = MAX_CLICK_TIME;
+                double speed = ( totalTimePressed / (double)MAX_CLICK_TIME ) *
+                ( Apple.MAX_SPEED - Apple.RED_SPEED );
                 game.getApples().add( new Apple( game.getWidth(), game.getHeight(),
-                me.getX(), (int)speed + 5 ) );
+                me.getX(), (int)speed + Apple.RED_SPEED ) );
             }
         }
-        game.setStartBarFill(false);
+        game.setStartBarFill( false );
     }
     
     
     public void mousePressed(MouseEvent me)
     {
         game.setPressedTime(System.currentTimeMillis());
-        game.setStartBarFill(true);
+        game.setStartBarFill( true );
     }
     
     public void mouseClicked(MouseEvent me)

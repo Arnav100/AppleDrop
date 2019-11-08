@@ -21,6 +21,7 @@ public class Basket
     private final int FOUR = 4;
     private final int FIFTH = 5;
     private final int FOURTH_ELEMENT = 3;
+    
     public Basket(int screenWidth, int screenHeight, int initialCenter )
     {
         this.bigWidth = screenWidth/SCREEN_PORPORTION_FOR_BIG_WIDTH;
@@ -34,17 +35,12 @@ public class Basket
     
     public boolean contains( Apple apple )
     {
-        int h = apple.getX();
-        int k = apple.getY();
-        int radius = apple.getSize() / 2;
-        if( past <= 0)
-            return h >= x + radius && h <= x + bigWidth - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
-        if( past > 0 )
-            return h >= x + radius && h <= past - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
-        return h >= screenWidth + x && h <= x + bigWidth - radius && k > screenHeight -
-            basketHeight - radius && k <= screenHeight;
+        int appleX = apple.getX();
+        int appleY = apple.getY();
+        if(appleY < screenHeight - basketHeight)
+            return false;
+
+        return (appleX > x && appleX <  x + bigWidth) || (past > 0 && appleX < past) ;
     }
     
     public void moveRight()

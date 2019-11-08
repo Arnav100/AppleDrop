@@ -10,40 +10,35 @@ public class KeyboardListener implements KeyListener
 {
     private AppleDrop game;
     
-    private boolean[] keys;
-    
 
     public static int RIGHT = 0, LEFT = 1, SPACE = 2, ESCAPE = 3;
 
     public KeyboardListener(AppleDrop a)
     {
         game = a;
-        keys = new boolean[4];
     }
     
     public void keyPressed( KeyEvent ke)
     {
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ RIGHT ] = true;
+            game.getKeys()[ RIGHT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ LEFT ] = true;
+            game.getKeys()[ LEFT ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ SPACE ] = true;
+            game.getKeys()[ SPACE ] = true;
         if( ke.getKeyCode() == KeyEvent.VK_ESCAPE )
-            keys[ ESCAPE ] = true;
-        game.setKeys(keys);
+            game.getKeys()[ ESCAPE ] = true;
     }
 
     
     public void keyReleased( KeyEvent ke)
     {
         if( ke.getKeyCode() == KeyEvent.VK_RIGHT )
-            keys[ RIGHT  ] = false;
+            game.getKeys()[ RIGHT  ] = false;
         if( ke.getKeyCode() == KeyEvent.VK_LEFT )
-            keys[ LEFT ] = false;
+            game.getKeys()[ LEFT ] = false;
         if( ke.getKeyCode() == KeyEvent.VK_SPACE )
-            keys[ SPACE ] = false;
-        game.setKeys(keys);
+            game.getKeys()[ SPACE ] = false;
     }
     
     public void keyTyped( KeyEvent ke)
