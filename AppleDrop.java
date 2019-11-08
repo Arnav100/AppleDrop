@@ -115,21 +115,18 @@ public class AppleDrop extends JPanel implements ActionListener
         if( keys[ KeyboardListener.LEFT ] )
             for( Basket basket : baskets )
                 basket.moveLeft();
-        if( keys[  KeyboardListener.SPACE] )       {
-            System.out.println("Space is clicked");
+        if( keys[  KeyboardListener.SPACE] ) 
             for( Apple apple : apples )
-            {
                 for( Basket basket : baskets )
-                    if( basket.contains( apple ) )
-                    {
+                    if( basket.contains( apple ) ) {
                         apple.swat();
                         if(apple.getColor().equals(Colour.BROWN))
                             player2Points += apple.getPointValue(); 
                         else
                             player1Points += apple.getPointValue();
                     }
-                }
-        }
+                
+        
         
         for(  int i = 0; i < apples.size(); i ++)
          {
