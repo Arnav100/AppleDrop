@@ -99,12 +99,10 @@ public class Basket
             return new int[][]{ new int[]{ xs[0], minY, xs[0], getYLeft( xs[0] ) },
                 new int[]{ xs[1], minY, xs[1], getYLeft( xs[1] ) }, 
                 new int[]{ xs[2], minY, xs[2], getYRight( xs[2] ) }, 
-                new int[]{ xs[ FOURTH_ELEMENT ], minY, xs[ FOURTH_ELEMENT ],
-                getYRight( xs[ FOURTH_ELEMENT ] ) }, 
-                new int[]{ getXLeft( ys[0] ), ys[0], getXRight( ys[0] ),
-                ys[0] }, new int[]{ getXLeft( ys[1] ), ys[1], getXRight( ys[1] ),
-                ys[1] }, new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),
-                ys[2] } };
+                new int[]{ xs[ FOURTH_ELEMENT ], minY, xs[ FOURTH_ELEMENT ], getYRight( xs[ FOURTH_ELEMENT ] ) }, 
+                new int[]{ getXLeft( ys[0] ), ys[0], getXRight( ys[0] ), ys[0] }, 
+                new int[]{ getXLeft( ys[1] ), ys[1], getXRight( ys[1] ), ys[1] }, 
+                new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),ys[2] } };
         }
         return ( new Basket( screenWidth, screenHeight, screenWidth + x ) ).getLines();
     }
