@@ -33,6 +33,7 @@ public class AppleDrop extends JPanel implements ActionListener
     private static final int THREE = 3;
     private static final int TRAP_POINTS = 4;
     private static final int NUM_KEYS = 4;
+    private static final int THIRD_ELEMENT = 3;
     
     private int panelWidth;
     private int panelHeight;
@@ -137,11 +138,16 @@ public class AppleDrop extends JPanel implements ActionListener
             g.fillPolygon( basket.getXCoords(), basket.getYCoords(), TRAP_POINTS ); 
             g.setColor( Colour.CHOCOLATE );
             for( int[] line : basket.getLines() )
-            {
-                g.drawLine( line[0], line[1], line[2], line[3] );
-            }
+                g.drawLine( line[0], line[1], line[2], line[ THIRD_ELEMENT ] );
             if(  basket.getPast() > 0 )
-                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(), TRAP_POINTS );
+            {    
+                g.setColor( Colour.CHOCOLATE_TRANSLUCENT );
+                g.fillPolygon( basket.getXCoords( true ), basket.getYCoords(),
+                TRAP_POINTS );
+                g.setColor( Colour.CHOCOLATE );
+                for( int[] line : basket.getLines( true ) )
+                    g.drawLine( line[0], line[1], line[2], line[ THIRD_ELEMENT ] );
+            }
         }
     }
     public final int MAX_CLICK_TIME = 5000;
