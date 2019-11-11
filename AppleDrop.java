@@ -17,10 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
- * Write a description of class AppleDrop here.
+ * A game involving two players dropping and catching apples
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Arnav Parashar
+ * @version 11/10/19
  */
 public class AppleDrop extends JPanel implements ActionListener
 {
@@ -69,11 +69,14 @@ public class AppleDrop extends JPanel implements ActionListener
     private ArrayList< Apple > apples;
     private Basket[] baskets;
     
-    private boolean startBarFill;
+    private boolean barFill;
     private boolean recoilBar;
     
     private boolean first;
     private boolean[] keys;
+    /**
+     * Constructor to initialize variables for the AppleDrop game
+     */
     public AppleDrop()
     {
         apples = new ArrayList< Apple >();
@@ -82,6 +85,12 @@ public class AppleDrop extends JPanel implements ActionListener
         first = true;
     }
     
+    /**
+     * Whenever the clock is "fired" thsi method will the tell the objects to move 
+     * and have them redrawn
+     * 
+     * @param ae is the ActionEvent of the clock Timer firing
+     */
     public void actionPerformed(ActionEvent ae)
     {
         for( Apple apple : apples )
@@ -90,41 +99,81 @@ public class AppleDrop extends JPanel implements ActionListener
         repaint();
     }
     
+    /**
+     * Returns the arraylist of apples in the game
+     * 
+     * @return the arraylist of apples in the game
+     */
     public ArrayList<Apple> getApples()
     {
         return apples;
     }
     
+    /**
+     * Returns the key boolean array
+     * 
+     * @return a boolean array of the keys
+     */
     public boolean[] getKeys()
     {
         return keys;
     }
     
+    /**
+     * Sets when the player pressed the mouse
+     * 
+     * @param t the time the player pressed the mouse as a long
+     */
     public void setPressedTime( long t)
     {
         pressedTime = t;
     }
     
+    /**
+     * Returns when the player pressed the mouse as a long
+     * 
+     * @return when the player pressed the mouse as a long
+     */
     public long getPressedTime()
     {
         return pressedTime;
     }
     
+    /**
+     * Returns the time, as a long, it was when the player previously pressed the mouse
+     * 
+     * @return long value of the previous time the player pressed the mouse 
+     */
     public long getLastPressedTime()
     {
         return lastPressedTime;
     }
     
+    /**
+     * Sets the time it was when the player previously pressed the mouse
+     * 
+     * @param t long the time it was when the player previously pressed the mouse
+     */
     public void setLastPressedTime(long t)
     {
         lastPressedTime = t;
     }
     
-    public void setStartBarFill(boolean s)
+    /**
+     * Sets whether the bar should fill or not
+     * 
+     * @param s boolean true if the bar should fill
+     */
+    public void setBarFill(boolean s)
     {
-        startBarFill = s;
+        barFill = s;
     }
     
+    /**
+     * Sets whether the recoil bar should fill or not
+     * 
+     * @param r boolean true if the recoil bar should fill
+     */
     public void setRecoilBar(boolean r)
     {
         recoilBar = r;
@@ -170,7 +219,11 @@ public class AppleDrop extends JPanel implements ActionListener
         }
     }
     
-    
+    /**
+     * This method paints the background and the objects in the appropiate location
+     * 
+     * @param g the Graphics given to the program by the computer running the program
+     */
     public void paintComponent( Graphics g )
     {
         if( first )
@@ -289,7 +342,7 @@ public class AppleDrop extends JPanel implements ActionListener
                        (int)(heightPorportion * heightMultiplier ));
         }
         
-        if(startBarFill)
+        if(barFill)
         {
             g.setColor(Colour.LIME_GREEN);
             double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MouseClickListener.MAX_CLICK_TIME;
@@ -310,6 +363,11 @@ public class AppleDrop extends JPanel implements ActionListener
         getHeight() / TWENTY_FOURTH );
     }
     
+    /**
+     * Starts up the AppleDrop game
+     * 
+     * @param a String array that is not used for this program
+     */
     public static void main( String[] args )
     {
         JFrame frame = new JFrame( "Apple Drop" );

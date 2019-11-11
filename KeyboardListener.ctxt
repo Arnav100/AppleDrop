@@ -1,12 +1,16 @@
 #BlueJ class context
 comment0.target=KeyboardListener
-comment0.text=\n\ Write\ a\ description\ of\ class\ KeyboardListener\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ A\ class\ to\ listen\ to\ key\ presses\ and\ update\ an\ AppleDrop\ game\n\n\ @author\ Arnav\ Parashar\ and\ Dana\ Nigrin\n\ @version\ 11/10/19\n
 comment1.params=a
 comment1.target=KeyboardListener(AppleDrop)
+comment1.text=\n\ Constructs\ a\ new\ KeyboardListener\ for\ the\ AppleDrop\ game\ to\ update\ it\ whenever\ a\ key\ is\ pressed\n\ \n\ @param\ a\ the\ AppleDrop\ game\ to\ notify\n
 comment2.params=ke
 comment2.target=void\ keyPressed(java.awt.event.KeyEvent)
+comment2.text=\n\ Updates\ game\ movements\ based\ on\ key\ presses\n\ \n\ @param\ ke\ the\ KeyEvent\ that\ occurred\n
 comment3.params=ke
 comment3.target=void\ keyReleased(java.awt.event.KeyEvent)
+comment3.text=\n\ Updates\ game\ movements\ based\ on\ key\ releases\n\ \n\ @param\ ke\ the\ KeyEvent\ that\ occurred\n
 comment4.params=ke
 comment4.target=void\ keyTyped(java.awt.event.KeyEvent)
+comment4.text=\n\ Has\ no\ affect\ on\ gameplay\n\ \n\ @param\ ke\ the\ KeyEvent\ that\ occurred\n
 numComments=5

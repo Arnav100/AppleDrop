@@ -1,10 +1,10 @@
 import java.awt.Color;
 
 /**
- * Write a description of class Color here.
+ * Colors to be used throughout the AppleDrop game
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Arnav Parashar
+ * @version 11/10/19
  */
 public class Colour
 {
