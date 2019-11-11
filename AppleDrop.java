@@ -143,7 +143,7 @@ public class AppleDrop extends JPanel implements ActionListener
             for( Apple apple : apples )
                 for( Basket basket : baskets )
                     if( basket.contains( apple ) ) {
-                        apple.swat();
+                        apple.getSwat();
                         if(apple.getColor().equals(Colour.BROWN))
                             player2Points += apple.getPointValue(); 
                         else

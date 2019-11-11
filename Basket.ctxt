@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Basket
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Basket\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Creates\ Basket\ ojects\ that\ moves\ across\ the\ screen,\ catch\ apples,\ and\ swat\ them\ away\r\n\r\n\ @author\ Dana\ Nigrin\r\n\ @version\ November\ 11,\ 2019\r\n
 comment1.params=screenWidth\ screenHeight\ initialCenter
 comment1.target=Basket(int,\ int,\ int)
 comment1.text=\r\n\ Creates\ a\ basket\ with\ widths\ and\ height\ proproportional\ to\ screen\ width\ and\ height,\r\n\ a\ specified\ initial\ x-position,\ and\ a\ predetermined\ speed.\r\n\ \r\n\ @param\ screenWidth\ int\ width\ of\ the\ user's\ screen\r\n\ @param\ screenHeight\ int\ height\ of\ the\ user's\ screen\r\n\ @pram\ initialCenter\ int\ x-position\ of\ the\ center\ of\ the\ basket\r\n

@@ -75,7 +75,7 @@ public class Apple
        return color;
    }
    
-   public void swat()
+   public void getSwat()
    {
        moveSpeed = -moveSpeed;
    }

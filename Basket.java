@@ -1,9 +1,9 @@
 import java.awt.Color;
 /**
- * Write a description of class Basket here.
+ * Creates Basket ojects that moves across the screen, catch apples, and swat them away
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dana Nigrin
+ * @version November 11, 2019
  */
 public class Basket
 {
