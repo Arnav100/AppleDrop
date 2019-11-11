@@ -1,9 +1,10 @@
 import java.awt.Color;
+
 /**
- * Creates Basket ojects that moves across the screen, catch apples, and swat them away
+ * Creates Baskets to be used in the AppleDrop Game
  *
- * @author Dana Nigrin and Arnav Parashar
- * @version November 11, 2019
+ * @author Arnav Parashar and Dana Nigrin
+ * @version 11/10/19
  */
 public class Basket
 {
@@ -26,9 +27,9 @@ public class Basket
      * Creates a basket with widths and height proproportional to screen width and height,
      * a specified initial x-position, and a predetermined speed.
      * 
-     * @param screenWidth int width of the user's screen
-     * @param screenHeight int height of the user's screen
-     * @pram initialCenter int x-position of the center of the basket
+     * @param screenWidth int width of the screen
+     * @param screenHeight int height of the screen
+     * @param initialCenter int x-position of the center of the basket
      */
     public Basket(int screenWidth, int screenHeight, int initialCenter )
     {
@@ -55,7 +56,7 @@ public class Basket
         if(appleY < screenHeight - basketHeight)
             return false;
 
-        return (appleX > x && appleX <  x + bigWidth) || (past > 0 && appleX < past) ;
+        return (appleX > x && appleX <  x + bigWidth) || (past > 0 && appleX < past);
     }
     
     /**
@@ -85,9 +86,9 @@ public class Basket
     }
     
     /**
-     * Returns the height of this Basket object
+     * Returns the height of the basket
      * 
-     * @return height of this basket
+     * @return the height of the basket
      */
     public int getHeight()
     {
@@ -95,7 +96,7 @@ public class Basket
     }
     
     /**
-     * Returns the number of pixels the top-right corner of this basket is past the screen.
+     * Returns the number of pixels the top-right corner of the basket is past the screen.
      * If this basket is not past the screen, it returns the negative difference between
      * the width and the x-position of the top-right corner of the basket
      * 
@@ -119,7 +120,7 @@ public class Basket
     
     /**
      * Returns the 2D int array for the lines of this basket, which is not past the screen
-     * 
+     *
      * @return 2D array for the lines of this basket
      */
     public int[][] getLines()
@@ -130,7 +131,7 @@ public class Basket
      * Returns the 2D int array for the lines of this basket, which may or may be past
      * the screen
      * 
-     * @param isSplit boolean stating whether this basket is past the screen
+     * @param isSplit boolean true if this basket is past the screen, false otherwise
      * 
      * @return 2D array for the lines of this basket
      */
@@ -146,10 +147,12 @@ public class Basket
             return new int[][]{ new int[]{ xs[0], minY, xs[0], getYLeft( xs[0] ) },
                 new int[]{ xs[1], minY, xs[1], getYLeft( xs[1] ) }, 
                 new int[]{ xs[2], minY, xs[2], getYRight( xs[2] ) }, 
-                new int[]{ xs[ FOURTH_ELEMENT ], minY, xs[ FOURTH_ELEMENT ], getYRight( xs[
-                FOURTH_ELEMENT ] ) }, new int[]{ getXLeft( ys[0] ), ys[0], getXRight(
+                
+                new int[]{ xs[ FOURTH_ELEMENT ], minY, xs[ FOURTH_ELEMENT ], getYRight(
+                xs[ FOURTH_ELEMENT ] ) }, new int[]{ getXLeft( ys[0] ), ys[0], getXRight(
                 ys[0] ), ys[0] }, new int[]{ getXLeft( ys[1] ), ys[1], getXRight( ys[1] ),
-                ys[1] }, new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),ys[2] } };
+                ys[1] }, new int[]{ getXLeft( ys[2] ), ys[2], getXRight( ys[2] ),ys[2] }
+                };
         }
         return ( new Basket( screenWidth, screenHeight, x - screenWidth + smallWidth ) ).
         getLines();
@@ -189,7 +192,7 @@ public class Basket
      * Returns the int x-coordinates for the four points of this basket, which may or may
      * not be past the screen
      * 
-     * @boolean isSplit boolean stating whether this basket is past the screen
+     * @param isSplit boolean true if this basket is past the screen, false otherwise
      * 
      * @return array of x-coordinates for the four points of this basket
      */
@@ -209,8 +212,7 @@ public class Basket
      */
     public int[] getYCoords()
     {
-        return new int[]{screenHeight-basketHeight, screenHeight-basketHeight, screenHeight,
-            screenHeight};
+        return new int[]{screenHeight-basketHeight, screenHeight-basketHeight,
+            screenHeight, screenHeight};
     }
 }
-//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****

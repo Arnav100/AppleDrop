@@ -1,6 +1,11 @@
 #BlueJ package file
+<<<<<<< HEAD
+dependency1.from=Basket
+dependency1.to=Apple
+=======
 dependency1.from=KeyboardListener
 dependency1.to=AppleDrop
+>>>>>>> 32aaf2502a4621f6ebb304c97d657cf3cad8bbbd
 dependency1.type=UsesDependency
 dependency10.from=Basket
 dependency10.to=Apple
@@ -14,8 +19,13 @@ dependency3.type=UsesDependency
 dependency4.from=Apple
 dependency4.to=Colour
 dependency4.type=UsesDependency
+<<<<<<< HEAD
+dependency5.from=Apple
+dependency5.to=Colour
+=======
 dependency5.from=AppleDrop
 dependency5.to=Apple
+>>>>>>> 32aaf2502a4621f6ebb304c97d657cf3cad8bbbd
 dependency5.type=UsesDependency
 dependency6.from=AppleDrop
 dependency6.to=Basket
@@ -29,6 +39,20 @@ dependency8.type=UsesDependency
 dependency9.from=AppleDrop
 dependency9.to=Colour
 dependency9.type=UsesDependency
+<<<<<<< HEAD
+editor.fx.0.height=722
+editor.fx.0.width=934
+editor.fx.0.x=320
+editor.fx.0.y=50
+objectbench.height=101
+objectbench.width=461
+package.divider.horizontal=0.6
+package.divider.vertical=0.8007380073800738
+package.editor.height=427
+package.editor.width=674
+package.editor.x=270
+package.editor.y=146
+=======
 editor.fx.0.height=735
 editor.fx.0.width=813
 editor.fx.0.x=277
@@ -41,6 +65,7 @@ package.editor.height=397
 package.editor.width=673
 package.editor.x=184
 package.editor.y=211
+>>>>>>> 32aaf2502a4621f6ebb304c97d657cf3cad8bbbd
 package.frame.height=600
 package.frame.width=800
 package.numDependencies=10

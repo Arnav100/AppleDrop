@@ -17,13 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
- * Write a description of class AppleDrop here.
+ * A game involving one player dropping apples and another player catching them
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Arnav Parashar
+ * @version 11/10/19
  */
 public class AppleDrop extends JPanel implements ActionListener
 {
+    
     private static final int MAX_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().
     getWidth();
     private static final int MAX_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().
@@ -69,12 +70,15 @@ public class AppleDrop extends JPanel implements ActionListener
     private ArrayList< Apple > apples;
     private Basket[] baskets;
     
-    private boolean startBarFill;
+    private boolean barFill;
     private boolean recoilBar;
     
     private boolean first;
     private boolean[] keys;
     
+    /**
+     * Constructor to initialize variables for the AppleDrop game
+     */
     public AppleDrop()
     {
         apples = new ArrayList< Apple >();
@@ -83,7 +87,13 @@ public class AppleDrop extends JPanel implements ActionListener
         first = true;
     }
     
-    public void actionPerformed(ActionEvent ae)
+    /**
+     * Whenever the clock is "fired" thsi method will the tell the objects to move 
+     * and have them redrawn
+     * 
+     * @param ae is the ActionEvent of the clock Timer firing
+     */
+    public void actionPerformed( ActionEvent ae )
     {
         for( Apple apple : apples )
              apple.move();
@@ -91,42 +101,82 @@ public class AppleDrop extends JPanel implements ActionListener
         repaint();
     }
     
+    /**
+     * Returns the arraylist of apples in the game
+     * 
+     * @return the arraylist of apples in the game
+     */
     public ArrayList<Apple> getApples()
     {
         return apples;
     }
     
+    /**
+     * Returns the key boolean array
+     * 
+     * @return a boolean array of the keys
+     */
     public boolean[] getKeys()
     {
         return keys;
     }
     
-    public void setPressedTime( long t)
+    /**
+     * Sets when the player pressed the mouse
+     * 
+     * @param t long time when the player pressed the mouse
+     */
+    public void setPressedTime( long t )
     {
         pressedTime = t;
     }
     
+    /**
+     * Returns when the player pressed the mouse as a long
+     * 
+     * @return when the player pressed the mouse as a long
+     */
     public long getPressedTime()
     {
         return pressedTime;
     }
     
+    /**
+     * Returns the time, as a long, the player previously pressed the mouse
+     * 
+     * @return long value of the previous time the player pressed the mouse 
+     */
     public long getLastPressedTime()
     {
         return lastPressedTime;
     }
     
-    public void setLastPressedTime(long t)
+    /**
+     * Sets when the player previously pressed the mouse
+     * 
+     * @param t long time when the player previously pressed the mouse
+     */
+    public void setLastPressedTime( long t )
     {
         lastPressedTime = t;
     }
     
-    public void setStartBarFill(boolean s)
+    /**
+     * Sets whether the bar should fill or not
+     * 
+     * @param s boolean true if the bar should fill, false otherwise
+     */
+    public void setBarFill( boolean s )
     {
-        startBarFill = s;
+        barFill = s;
     }
     
-    public void setRecoilBar(boolean r)
+    /**
+     * Sets whether the recoil bar should fill or not
+     * 
+     * @param r boolean true if the recoil bar should fill, false otherwise
+     */
+    public void setRecoilBar( boolean r )
     {
         recoilBar = r;
     }
@@ -143,7 +193,7 @@ public class AppleDrop extends JPanel implements ActionListener
             for( Apple apple : apples )
                 for( Basket basket : baskets )
                     if( basket.contains( apple ) ) {
-                        apple.getSwat();
+                        apple.swat();
                         if(apple.getColor().equals(Colour.BROWN))
                             player2Points += apple.getPointValue(); 
                         else
@@ -171,7 +221,11 @@ public class AppleDrop extends JPanel implements ActionListener
         }
     }
     
-    
+    /**
+     * This method paints the background and the objects in the appropiate location
+     * 
+     * @param g the Graphics given to the program by the computer running the program
+     */
     public void paintComponent( Graphics g )
     {
         if( first )
@@ -227,8 +281,8 @@ public class AppleDrop extends JPanel implements ActionListener
             
         keys = new boolean[ NUM_KEYS ];
 
-        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth / FOURTH ),
-        new Basket( panelWidth, panelHeight, THREE * panelWidth / FOURTH ) };
+        baskets = new Basket[]{ new Basket( panelWidth, panelHeight, panelWidth /
+        FOURTH ), new Basket( panelWidth, panelHeight, THREE * panelWidth / FOURTH ) };
         
 
         first = false;
@@ -240,8 +294,8 @@ public class AppleDrop extends JPanel implements ActionListener
         g.setColor( Colour.GRASS_GREEN );
         g.fillRect( 0, panelHeight / 2, panelWidth, panelHeight / 2 );
         g.setColor( Colour.SUBDUED_GREEN );
-        g.fillArc( panelWidth / FOURTH, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0,
-        HALF_CIRCLE );
+        g.fillArc( panelWidth / FOURTH, 0, panelWidth / 2, THREE * panelHeight / FOURTH,
+        0, HALF_CIRCLE );
         g.setColor( Colour.GREEN );
         g.fillArc( 0, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0, HALF_CIRCLE );
         g.fillArc( panelWidth / 2, 0, panelWidth / 2, THREE * panelHeight / FOURTH, 0,
@@ -256,51 +310,63 @@ public class AppleDrop extends JPanel implements ActionListener
     }
     private void drawSpeedBar(Graphics g)
     {
-        int widthPorportion = getWidth()/10;
-        double widthPlacement = 7;
-        double widthMultiplier = 2;
-        int heightPorportion = getHeight()/12;
+        int widthPorportion = getWidth() / TENTH;
+        double widthPlacement = SEVEN;
+        double widthMultiplier = 2; 
+        int heightPorportion = getHeight() / TWELFTH;
         double heightPlacement = 0.5;
         double heightMultiplier = 1;
         double leftwardMovement = 0.5;
         
 
-        g.setColor(Colour.WHITE);
-        g.fillRect((int)(widthPorportion * (widthPlacement - leftwardMovement)), (int)(heightPorportion*heightPlacement),
-                    (int)(widthPorportion * (widthMultiplier + leftwardMovement)), (int)(heightPorportion * heightMultiplier));
-        g.setColor(Colour.BLACK);
-        g.drawRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
-                    (int)(widthPorportion * widthMultiplier), (int)(heightPorportion * heightMultiplier));
-        g.drawRect((int)(widthPorportion * (widthPlacement - leftwardMovement)), (int)(heightPorportion*heightPlacement),
-                    (int)(widthPorportion * leftwardMovement), (int)(heightPorportion * heightMultiplier));
-        if(recoilBar)
+        g.setColor( Colour.WHITE );
+        g.fillRect( (int)( widthPorportion * ( widthPlacement - leftwardMovement ) ),
+        (int)( heightPorportion * heightPlacement ), (int)( widthPorportion * (      
+        widthMultiplier + leftwardMovement ) ), (int)( heightPorportion *
+        heightMultiplier ) );
+        g.setColor( Colour.BLACK );
+        
+        g.drawRect( (int)( widthPorportion * widthPlacement ), (int)( heightPorportion *
+        heightPlacement), (int)( widthPorportion * widthMultiplier ), (int)(
+        heightPorportion * heightMultiplier ) );
+        g.drawRect( (int)( widthPorportion * ( widthPlacement - leftwardMovement ) ),
+        (int)(heightPorportion*heightPlacement), (int)( widthPorportion *
+        leftwardMovement ), (int)( heightPorportion * heightMultiplier ) );
+        
+        if( recoilBar )
         {
-            g.setColor(Colour.BLUE);
-            double timePorportion = (System.currentTimeMillis() - lastPressedTime)/(double)MouseClickListener.TIME_BETWEEN_CLICKS;
+            g.setColor( Colour.BLUE );
+            double timePorportion = ( System.currentTimeMillis() - lastPressedTime ) / 
+            (double)MouseClickListener.TIME_BETWEEN_CLICKS;
             
-            if(timePorportion > 1)
+            if( timePorportion > 1 )
             {
                 recoilBar = false;
                 timePorportion = 1;
             }
+            
             int roundingFix = 1;
-            g.fillRect((int)(widthPorportion  * (widthPlacement - (1 - timePorportion) * leftwardMovement) ), 
-                       (int)(heightPorportion*heightPlacement ),
-                       (int)(widthPorportion * leftwardMovement* (1 - timePorportion) + roundingFix), 
-                       (int)(heightPorportion * heightMultiplier ));
+            g.fillRect( (int)( widthPorportion  * ( widthPlacement - ( 1 -
+            timePorportion ) * leftwardMovement ) ), (int)( heightPorportion *
+            heightPlacement ), (int)( widthPorportion * leftwardMovement * ( 1 -
+            timePorportion ) + roundingFix ), (int)( heightPorportion *
+            heightMultiplier ) );
         }
-        
-        if(startBarFill)
+        if( barFill )
         {
-            g.setColor(Colour.LIME_GREEN);
-            double timePorportion = (System.currentTimeMillis() - pressedTime)/(double)MouseClickListener.MAX_CLICK_TIME;
-            double redAppleTime = MouseClickListener.NORMAL_APPLE_CLICK_LIMIT/(double)MouseClickListener.MAX_CLICK_TIME;
-            if(timePorportion > 1)
+            g.setColor( Colour.LIME_GREEN );
+            double timePorportion = ( System.currentTimeMillis() - pressedTime ) /
+            (double)MouseClickListener.MAX_CLICK_TIME;
+            double redAppleTime = MouseClickListener.NORMAL_APPLE_CLICK_LIMIT / 
+            (double)MouseClickListener.MAX_CLICK_TIME;
+            if( timePorportion > 1 )
                 timePorportion = 1;
-            if(timePorportion < redAppleTime)
-                g.setColor(Colour.RED);
-            g.fillRect((int)(widthPorportion * widthPlacement), (int)(heightPorportion*heightPlacement),
-                        (int)(widthPorportion * widthMultiplier * timePorportion), (int)(heightPorportion * heightMultiplier));
+            if( timePorportion < redAppleTime )
+                g.setColor( Colour.RED );
+            g.fillRect( (int)( widthPorportion * widthPlacement ), (int)
+            ( heightPorportion * heightPlacement ), (int)( widthPorportion *
+            widthMultiplier * timePorportion ), (int)( heightPorportion *
+            heightMultiplier) );
         }
     }
     private void drawPoints(Graphics g)
@@ -311,6 +377,11 @@ public class AppleDrop extends JPanel implements ActionListener
         getHeight() / TWENTY_FOURTH );
     }
     
+    /**
+     * Starts up the AppleDrop game
+     * 
+     * @param a String array that is not used for this program
+     */
     public static void main( String[] args )
     {
         JFrame frame = new JFrame( "Apple Drop" );
@@ -329,4 +400,3 @@ public class AppleDrop extends JPanel implements ActionListener
         frame.setVisible( true );
     }
 }
-//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****

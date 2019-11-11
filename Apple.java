@@ -1,9 +1,10 @@
 import java.awt.Color;
+
 /**
- * Write a description of class Apple here.
+ * Creates apples to be used in the AppleDrop game
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Arnav Parashar and Dana Nigrin
+ * @version 11/10/19
  */
 public class Apple
 {
@@ -12,16 +13,35 @@ public class Apple
    private int x, y;
    private int moveSpeed;
    private Color color; 
+   /** The speed of an red apple */
    public static final int RED_SPEED = 5;
+   /** The maximum speed of an apple */
    public static final int MAX_SPEED = 25;
    private static final int POINT_SPEED_RATIO = 5;
    
+   /**
+    * Constructs a red apple at the top of the screen at the given x position
+    * 
+    * @param screenWidth int width of the screen
+    * @param screenHeight int height of the screen
+    * @param clickX int x position that was clicked
+    */
    public Apple(int screenWidth, int screenHeight, int clickX)
    {
        this(screenWidth, screenHeight, clickX, RED_SPEED );
        color = Colour.RED;
    }
-   public Apple(int screenWidth, int screenHeight, int clickX, boolean isBrown)
+   
+   /**
+    * Constructs either a red or brown apple at the top of the screen at the given
+    * x-position
+    * 
+    * @param screenWidth int width of the screen
+    * @param screenHeight int height of the screen
+    * @param clickX int x position that was clicked
+    * @param isBrown boolean true if apple should be brown, false otherwise
+    */
+   public Apple( int screenWidth, int screenHeight, int clickX, boolean isBrown )
    {
       this(screenWidth, screenHeight, clickX, MAX_SPEED / 2);
       if(isBrown)
@@ -30,6 +50,15 @@ public class Apple
         color = Colour.RED;
    }
    
+   /**
+    * Constructs a green apple at the top of the screen at the given x-position with the
+    * given speed
+    * 
+    * @param screenWidth int width of the screen
+    * @param screenHeight int height of the screen
+    * @param clickX int x position that was clicked
+    * @param moveSpeed int speed of the apple
+    */
    public Apple(int screenWidth, int screenHeight, int clickX, int moveSpeed)
    {
        this.x = clickX;
@@ -37,47 +66,83 @@ public class Apple
        this.radius = screenWidth/SCREEN_PORPORTION;
        this.moveSpeed = moveSpeed;
        color = Colour.LIME_GREEN;
-    }
+   }
+   
+   /**
+    * Moves the apple down the screen
+    */
    public void move()
    {
        y += moveSpeed;
    }
    
+   /**
+    * Returns the x value of the apple
+    * 
+    * @return the x value of the apple
+    */
    public int getX()
    {
        return x;
    }
    
+   /**
+    * Returns the y value of the apple
+    * 
+    * @return the y value of the apple
+    */
    public int getY()
    {
        return y;
    }
     
+   /**
+    * Returns the point value of the apple determined by its speed
+    * 
+    * @return the point value of the apple determined by its speed
+    */
    public int getPointValue()
    {
        if(color.equals(Colour.RED))
             return 1;
        return (int)( Math.abs( moveSpeed ) / (double)MAX_SPEED * POINT_SPEED_RATIO );
    }
-
+   
+   /**
+    * Returns the speed of the apple
+    * 
+    * @return the speed of the apple
+    */
    public int getSpeed()
    {
-    return moveSpeed;
-    }
+       return moveSpeed;
+   }
    
+   /**
+    * Returns the diameter of the apple
+    * 
+    * @return the diameter of the apple
+    */
    public int getSize()
    {
        return radius * 2;
    }
    
+   /**
+    * Returns the Color of the apple
+    * 
+    * @return the Color of the apple
+    */
    public Color getColor()
    {
        return color;
    }
    
-   public void getSwat()
+   /**
+    * "Swats" the apple by negating the speed
+    */
+   public void swat()
    {
        moveSpeed = -moveSpeed;
    }
 }
-//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****
