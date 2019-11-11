@@ -49,7 +49,7 @@ public class AppleDrop extends JPanel implements ActionListener
     
     private static final int FONT_SIZE = 24;
     private static final int HALF_CIRCLE = 180;
-    private static final int INCREMENT = 20;
+    private static final int INCREMENT = 15;
     private static final int TRAP_POINTS = 4;
     private static final int NUM_KEYS = 4;
     private static final int FOURTH_ELEMENT = 3;
@@ -74,6 +74,7 @@ public class AppleDrop extends JPanel implements ActionListener
     
     private boolean first;
     private boolean[] keys;
+    
     /**
      * Constructor to initialize variables for the AppleDrop game
      */
