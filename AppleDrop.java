@@ -19,7 +19,7 @@ import javax.swing.Timer;
 /**
  * A game involving one player dropping apples and another player catching them
  *
- * @author Arnav Parashar
+ * @author Arnav Parashar and Dana Nigrin
  * @version 11/10/19
  */
 public class AppleDrop extends JPanel implements ActionListener
