@@ -2,7 +2,7 @@ import java.awt.Color;
 /**
  * Creates Basket ojects that moves across the screen, catch apples, and swat them away
  *
- * @author Dana Nigrin
+ * @author Dana Nigrin and Arnav Parashar
  * @version November 11, 2019
  */
 public class Basket
@@ -213,3 +213,4 @@ public class Basket
             screenHeight};
     }
 }
+//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****//***/****
